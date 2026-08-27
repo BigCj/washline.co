@@ -13,33 +13,27 @@ import {
   ShoppingBag, 
   Truck, 
   ShieldCheck, 
-  Sparkles, 
-  Info, 
-  PackageCheck,
   CreditCard,
   Layers,
   CheckCircle2,
-  Clock
+  Clock,
+  Info
 } from 'lucide-react';
 
 export default function ProductConfigurator() {
-  const { addItem, openCart } = useCart();
+  const { addItem } = useCart();
 
   const [selectedColor, setSelectedColor] = useState<FrameColor>(
-    PRODUCT_DATA.colors[0] // Charcoal default
+    PRODUCT_DATA.colors[0]
   );
 
   const [selectedSize, setSelectedSize] = useState<ProductSize>(
-    PRODUCT_DATA.sizes.find((s) => s.isPopular) || PRODUCT_DATA.sizes[3] // 2.3m default
+    PRODUCT_DATA.sizes.find((s) => s.isPopular) || PRODUCT_DATA.sizes[3]
   );
 
-  const [isDiyKit, setIsDiyKit] = useState<boolean>(true); // DIY tube kit default
+  const [isDiyKit, setIsDiyKit] = useState<boolean>(true);
   const [quantity, setQuantity] = useState<number>(1);
   const [addedToast, setAddedToast] = useState(false);
-
-  const currentPrice = isDiyKit
-    ? selectedSize.diyPriceInclVat
-    : selectedSize.assembledPriceInclVat;
 
   const handleAddToCart = () => {
     addItem(selectedSize, selectedColor, isDiyKit, quantity);
@@ -53,18 +47,18 @@ export default function ProductConfigurator() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-xs font-bold tracking-widest uppercase text-zinc-500">
-            Order Directly from the Manufacturer
+            Order Or Request A Quotation
           </span>
           <h2 className="mt-2 text-3xl sm:text-5xl font-extrabold tracking-tight text-zinc-950">
-            Configure Your Foldaway
+            Choose Your Foldaway
           </h2>
           <p className="mt-4 text-base sm:text-lg text-zinc-600">
-            Choose your size, frame powder coating, and delivery format. Engineered to last since 2003.
+            Select your size, frame colour, and delivery format.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          {/* Left Column: Product Visuals & Live Preview */}
+          {/* Left Column: Visual & Verified Specifications */}
           <div className="lg:col-span-7 space-y-6">
             <div className="relative aspect-[16/10] bg-white rounded-3xl overflow-hidden shadow-md border border-zinc-200/80">
               <Image
@@ -72,17 +66,17 @@ export default function ProductConfigurator() {
                 alt={`The Foldaway washing line in ${selectedColor.name}`}
                 fill
                 priority
-                className="object-cover transition-opacity duration-300"
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 60vw"
               />
 
-              {/* Badges on Visual */}
               <div className="absolute top-4 left-4 flex flex-col gap-2">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900/90 text-white text-xs font-bold backdrop-blur-md">
                   {selectedSize.nominalLength} × {selectedSize.width}
                 </span>
 
                 {selectedSize.isPopular && (
-                  <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-amber-500 text-zinc-950 text-xs font-extrabold uppercase tracking-wide">
+                  <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-amber-500 text-zinc-950 text-xs font-bold uppercase tracking-wide">
                     ★ Most Popular Size
                   </span>
                 )}
@@ -91,7 +85,7 @@ export default function ProductConfigurator() {
               <div className="absolute bottom-4 right-4">
                 <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/95 text-zinc-900 text-xs font-semibold backdrop-blur-md shadow-sm border border-zinc-200">
                   <span
-                    className="w-3 h-3 rounded-full border border-zinc-300 shadow-inner"
+                    className="w-3 h-3 rounded-full border border-zinc-300"
                     style={{ backgroundColor: selectedColor.hex }}
                   />
                   <span>{selectedColor.name} Frame</span>
@@ -99,73 +93,83 @@ export default function ProductConfigurator() {
               </div>
             </div>
 
-            {/* Product Format Explanatory Card */}
-            <div className="p-6 rounded-2xl bg-white border border-zinc-200">
+            {/* Product Format Distinction Card */}
+            <div className="p-6 rounded-2xl bg-white border border-zinc-200 space-y-2">
               <div className="flex items-start gap-4">
-                <div className="p-3 rounded-xl bg-zinc-100 text-zinc-900">
+                <div className="p-3 rounded-xl bg-zinc-100 text-zinc-900 shrink-0">
                   <Layers className="w-5 h-5" />
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-zinc-950">
                     {isDiyKit
-                      ? 'The Foldaway DIY Assemble Kit (Compact Shipping Tube)'
-                      : 'The Standard Foldaway (Fully Assembled)'}
+                      ? 'The Foldaway DIY Assemble Kit'
+                      : 'The Standard Foldaway'}
                   </h4>
                   <p className="text-xs sm:text-sm text-zinc-600 mt-1 leading-relaxed">
                     {isDiyKit
-                      ? 'Delivered inside a strong ~10 cm diameter cardboard tube for easy vehicle or courier transport. Requires straightforward assembly with a rubber mallet.'
-                      : 'Delivered completely pre-assembled and pre-strung, ready for immediate wall mounting.'}
+                      ? 'Delivered in kit form in a strong cardboard tube (approx. 10 cm in diameter) for easier transportation. Requires basic assembly using a rubber mallet.'
+                      : 'Delivered completely assembled and strung ready for wall mounting.'}
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Hanging Capacity & Bedding Compatibility Note */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-4 rounded-xl bg-zinc-100/70 border border-zinc-200 text-xs">
-                <div className="font-bold text-zinc-900">Drying Capacity:</div>
+            {/* Verified Sheet & Wall Compatibility Note */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+              <div className="p-4 rounded-xl bg-zinc-100 border border-zinc-200">
+                <div className="font-bold text-zinc-900">Wall Space Required:</div>
                 <div className="text-zinc-600 mt-1">
-                  {selectedSize.linesCount} lines ({selectedSize.lineSpacing} apart) ={' '}
-                  <strong className="text-zinc-950">{selectedSize.totalHangingSpace}</strong>
+                  {selectedSize.minWallSpaceRequired}
                 </div>
               </div>
 
-              <div className="p-4 rounded-xl bg-zinc-100/70 border border-zinc-200 text-xs">
-                <div className="font-bold text-zinc-900">Bedding Compatibility:</div>
-                <div className="text-zinc-600 mt-1">
-                  {selectedSize.sheetCompatibility}
+              {selectedSize.sheetCompatibility && (
+                <div className="p-4 rounded-xl bg-zinc-100 border border-zinc-200">
+                  <div className="font-bold text-zinc-900">Bedding Accommodation:</div>
+                  <div className="text-zinc-600 mt-1">
+                    {selectedSize.sheetCompatibility}
+                  </div>
                 </div>
-              </div>
+              )}
+            </div>
+
+            {/* Sizing Recommendation Note */}
+            <div className="p-4 rounded-xl bg-amber-50/70 border border-amber-200 text-xs text-amber-900 leading-relaxed">
+              <strong>Tip on larger spaces:</strong> The longest model manufactured is 2.6 m. Mr Washline recommends using a second or third washing line rather than going larger where additional hanging space is required.
             </div>
           </div>
 
-          {/* Right Column: Configurator Controls */}
+          {/* Right Column: Controls */}
           <div className="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-8 border border-zinc-200/80 shadow-sm space-y-8">
             {/* Price Heading */}
             <div className="pb-6 border-b border-zinc-100">
               <div className="flex items-baseline justify-between">
                 <div>
                   <div className="text-xs font-bold text-zinc-500 uppercase tracking-wider">
-                    Price (incl. VAT)
+                    Price Information
                   </div>
-                  <div className="text-3xl sm:text-4xl font-extrabold text-zinc-950 mt-1">
-                    R{currentPrice.toLocaleString()}
+                  <div className="text-2xl sm:text-3xl font-extrabold text-zinc-950 mt-1">
+                    {isDiyKit ? PRODUCT_DATA.pricing.diyKitPriceDisplay : 'Quotation on Request'}
                   </div>
+                  {isDiyKit && (
+                    <div className="text-xs text-zinc-500 mt-0.5">
+                      Display: {PRODUCT_DATA.pricing.diyKitRangeDisplay}
+                    </div>
+                  )}
                 </div>
-                <div className="text-right">
-                  <span className="text-xs font-semibold px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-lg border border-emerald-200/60 inline-flex items-center gap-1">
-                    <CheckCircle2 className="w-3 h-3" /> In Stock
-                  </span>
-                </div>
+
+                <span className="text-xs font-semibold px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-lg border border-emerald-200 inline-flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3" /> Direct Supplier
+                </span>
               </div>
 
               <div className="text-xs text-zinc-500 mt-2 flex items-center gap-1.5">
                 <Clock className="w-3.5 h-3.5 text-zinc-400" />
-                <span>Lead time: approx. 1–3 working days dispatch</span>
+                <span>Lead time: approx. 1–3 working days</span>
               </div>
             </div>
 
-            {/* 1. Format Selection (DIY Kit vs Assembled) */}
+            {/* 1. Format Selection */}
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-zinc-700 mb-3">
                 1. Delivery & Assembly Format
@@ -185,7 +189,7 @@ export default function ProductConfigurator() {
                     {isDiyKit && <Check className="w-3.5 h-3.5" />}
                   </div>
                   <div className={`text-[11px] mt-1 ${isDiyKit ? 'text-zinc-300' : 'text-zinc-500'}`}>
-                    10cm Cardboard Tube
+                    10 cm Cardboard Tube
                   </div>
                 </button>
 
@@ -199,11 +203,11 @@ export default function ProductConfigurator() {
                   }`}
                 >
                   <div className="text-xs font-bold flex items-center justify-between">
-                    <span>Fully Assembled</span>
+                    <span>Standard Assembled</span>
                     {!isDiyKit && <Check className="w-3.5 h-3.5" />}
                   </div>
                   <div className={`text-[11px] mt-1 ${!isDiyKit ? 'text-zinc-300' : 'text-zinc-500'}`}>
-                    Ready strung & assembled
+                    Pre-assembled & strung
                   </div>
                 </button>
               </div>
@@ -215,9 +219,6 @@ export default function ProductConfigurator() {
                 <label className="text-xs font-bold uppercase tracking-wider text-zinc-700">
                   2. Select Size
                 </label>
-                <span className="text-xs text-zinc-500 font-medium">
-                  Needs: {selectedSize.minWallSpaceRequired}
-                </span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -228,21 +229,18 @@ export default function ProductConfigurator() {
                       key={s.id}
                       type="button"
                       onClick={() => setSelectedSize(s)}
-                      className={`p-3 rounded-xl border text-left transition-all relative ${
+                      className={`p-3 rounded-xl border text-left transition-all ${
                         isSelected
                           ? 'border-zinc-900 bg-zinc-50 text-zinc-950 font-bold ring-1 ring-zinc-900'
                           : 'border-zinc-200 hover:border-zinc-300 text-zinc-700'
                       }`}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="text-sm font-semibold">{s.nominalLength}</span>
-                        <span className="text-xs text-zinc-500 font-normal">
-                          R{(isDiyKit ? s.diyPriceInclVat : s.assembledPriceInclVat).toLocaleString()}
-                        </span>
+                        <span className="text-sm font-semibold">{s.label}</span>
                       </div>
 
                       {s.isPopular && (
-                        <span className="mt-1 inline-block text-[10px] uppercase font-bold text-amber-700 bg-amber-100 px-1.5 py-0.5 rounded">
+                        <span className="mt-1 inline-block text-[10px] uppercase font-bold text-amber-800 bg-amber-100 px-1.5 py-0.5 rounded">
                           Most Popular
                         </span>
                       )}
@@ -273,7 +271,7 @@ export default function ProductConfigurator() {
                       }`}
                     >
                       <span
-                        className="w-6 h-6 rounded-full border border-zinc-300 shadow-inner flex items-center justify-center"
+                        className="w-6 h-6 rounded-full border border-zinc-300 flex items-center justify-center"
                         style={{ backgroundColor: c.hex }}
                       >
                         {isSelected && (
@@ -298,7 +296,7 @@ export default function ProductConfigurator() {
                   <button
                     type="button"
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="w-8 h-8 rounded-lg flex items-center justify-center text-zinc-600 hover:bg-white hover:text-zinc-950 transition-colors font-bold"
+                    className="w-8 h-8 rounded-lg flex items-center justify-center text-zinc-600 hover:bg-white hover:text-zinc-950 font-bold text-xs"
                   >
                     -
                   </button>
@@ -308,7 +306,7 @@ export default function ProductConfigurator() {
                   <button
                     type="button"
                     onClick={() => setQuantity(quantity + 1)}
-                    className="w-8 h-8 rounded-lg flex items-center justify-center text-zinc-600 hover:bg-white hover:text-zinc-950 transition-colors font-bold"
+                    className="w-8 h-8 rounded-lg flex items-center justify-center text-zinc-600 hover:bg-white hover:text-zinc-950 font-bold text-xs"
                   >
                     +
                   </button>
@@ -317,16 +315,16 @@ export default function ProductConfigurator() {
                 <button
                   type="button"
                   onClick={handleAddToCart}
-                  className="flex-1 py-4 px-6 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white font-bold text-sm uppercase tracking-wider transition-all shadow-md hover:shadow-lg active:scale-[0.98] flex items-center justify-center gap-2"
+                  className="flex-1 py-4 px-6 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md active:scale-[0.98] flex items-center justify-center gap-2"
                 >
                   <ShoppingBag className="w-4 h-4" />
-                  <span>Add to Basket</span>
+                  <span>Add to Basket / Quote</span>
                 </button>
               </div>
 
               {addedToast && (
-                <div className="p-3 bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-semibold rounded-xl text-center animate-in fade-in zoom-in-95 duration-150">
-                  Added to your basket! Opening checkout drawer...
+                <div className="p-3 bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-semibold rounded-xl text-center">
+                  Configuration added to basket.
                 </div>
               )}
             </div>
@@ -345,7 +343,7 @@ export default function ProductConfigurator() {
 
               <div className="flex items-center gap-2">
                 <Truck className="w-4 h-4 text-zinc-400" />
-                <span>Nationwide South Africa delivery confirmed on order</span>
+                <span>Delivery available across South Africa (confirmed on order / quotation)</span>
               </div>
             </div>
           </div>

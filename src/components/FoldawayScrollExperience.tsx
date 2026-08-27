@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowDown, Sparkles, ShieldCheck, ChevronRight } from 'lucide-react';
+import { ArrowDown, ChevronRight } from 'lucide-react';
 
 const FRAMES = [
   '/images/washline/frame-01-open.webp',
@@ -20,10 +20,8 @@ export default function FoldawayScrollExperience() {
   const [progress, setProgress] = useState(0);
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
-  const [manualFrame, setManualFrame] = useState(0); // for reduced motion / interactive slider
   const imagesRef = useRef<HTMLImageElement[]>([]);
 
-  // Check reduced motion preference
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     setReducedMotion(mediaQuery.matches);
@@ -32,7 +30,6 @@ export default function FoldawayScrollExperience() {
     return () => mediaQuery.removeEventListener('change', handler);
   }, []);
 
-  // Preload all frames
   useEffect(() => {
     let loadedCount = 0;
     const loadedImages: HTMLImageElement[] = [];
@@ -69,19 +66,15 @@ export default function FoldawayScrollExperience() {
 
     if (!img1 || !img2) return;
 
-    // Set canvas internal resolution to 1200x800 for high DPI sharpness
     if (canvas.width !== 1200 || canvas.height !== 800) {
       canvas.width = 1200;
       canvas.height = 800;
     }
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Draw primary base frame
     ctx.globalAlpha = 1;
     ctx.drawImage(img1, 0, 0, canvas.width, canvas.height);
 
-    // If interpolating between frames, crossfade upper frame
     if (blend > 0.01 && lowerIndex !== upperIndex) {
       ctx.globalAlpha = blend;
       ctx.drawImage(img2, 0, 0, canvas.width, canvas.height);
@@ -89,7 +82,6 @@ export default function FoldawayScrollExperience() {
     ctx.globalAlpha = 1;
   };
 
-  // Scroll listener mapped to container pinning
   useEffect(() => {
     if (reducedMotion) return;
 
@@ -103,7 +95,6 @@ export default function FoldawayScrollExperience() {
 
       if (totalScrollableDistance <= 0) return;
 
-      // When container top reaches top of viewport (rect.top <= 0)
       const scrolledPastTop = -rect.top;
       const rawProgress = Math.max(
         0,
@@ -122,11 +113,10 @@ export default function FoldawayScrollExperience() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [imagesLoaded, reducedMotion]);
 
-  // Copy state calculation based on progress
   const getActiveTextIndex = (p: number) => {
-    if (p < 0.3) return 0; // "Open when you need it."
-    if (p < 0.7) return 1; // "Designed to disappear."
-    return 2; // "Fold it away when you don’t."
+    if (p < 0.35) return 0;
+    if (p < 0.7) return 1;
+    return 2;
   };
 
   const activeTextIdx = getActiveTextIndex(progress);
@@ -139,7 +129,6 @@ export default function FoldawayScrollExperience() {
         reducedMotion ? 'py-20 min-h-auto' : 'h-[220vh] sm:h-[260vh]'
       }`}
     >
-      {/* Sticky Presentation Stage */}
       <div
         className={`${
           reducedMotion
@@ -147,37 +136,24 @@ export default function FoldawayScrollExperience() {
             : 'sticky top-0 h-screen w-full flex flex-col justify-between overflow-hidden'
         }`}
       >
-        {/* Top Floating Badge & Header */}
+        {/* Top Product Specs Indicator */}
         <div className="pt-6 sm:pt-10 px-4 sm:px-8 max-w-7xl mx-auto w-full z-20 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-xs font-semibold tracking-wider text-zinc-300 uppercase border border-white/10">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              Scroll-Controlled Mechanical Action
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-xs font-medium tracking-wider text-zinc-300 border border-white/10">
+              The Foldaway Washing Line
             </span>
           </div>
 
-          <div className="hidden sm:flex items-center gap-4 text-xs text-zinc-400 font-mono">
-            <span>
-              ROTATION:{' '}
-              <strong className="text-white">
-                {Math.round(progress * 90)}°
-              </strong>
-            </span>
-            <span>|</span>
-            <span>
-              STATUS:{' '}
-              <strong className="text-white">
-                {progress < 0.15
-                  ? 'HORIZONTAL (OPEN)'
-                  : progress > 0.85
-                  ? 'FOLDED (FLAT)'
-                  : 'IN MOTION'}
-              </strong>
-            </span>
+          <div className="hidden sm:flex items-center gap-3 text-xs text-zinc-400">
+            <span>Aluminium</span>
+            <span>•</span>
+            <span>Epoxy Powder-Coated</span>
+            <span>•</span>
+            <span>Stainless Steel Screws</span>
           </div>
         </div>
 
-        {/* Central Visual & Canvas Render Canvas */}
+        {/* Central Visual & Canvas Render */}
         <div className="relative flex-1 flex items-center justify-center p-4 sm:p-6 w-full max-w-6xl mx-auto z-10">
           {!reducedMotion ? (
             <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] max-h-[72vh] rounded-2xl overflow-hidden shadow-2xl bg-zinc-900 border border-zinc-800">
@@ -187,47 +163,38 @@ export default function FoldawayScrollExperience() {
                 style={{ filter: 'brightness(1.02) contrast(1.02)' }}
               />
 
-              {/* Minimal Text Overlay synchronized to scroll */}
+              {/* Minimal Text Overlay fixed height container to avoid layout shift */}
               <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent flex flex-col justify-end p-6 sm:p-10 pointer-events-none">
-                <div className="max-w-xl transition-all duration-300 transform">
+                <div className="max-w-xl min-h-[110px] flex flex-col justify-end">
                   {activeTextIdx === 0 && (
-                    <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-                      <div className="text-xs sm:text-sm font-semibold tracking-widest text-emerald-400 uppercase mb-1">
-                        01 / Active Drying
-                      </div>
+                    <div className="transition-opacity duration-300">
                       <h3 className="text-2xl sm:text-4xl font-bold tracking-tight text-white">
                         Open when you need it.
                       </h3>
-                      <p className="text-sm sm:text-base text-zinc-300 mt-2 leading-relaxed">
-                        Six full lines held perfectly rigid by lightweight powder-coated aluminium stays.
+                      <p className="text-sm sm:text-base text-zinc-300 mt-2">
+                        Supported horizontally for active drying.
                       </p>
                     </div>
                   )}
 
                   {activeTextIdx === 1 && (
-                    <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-                      <div className="text-xs sm:text-sm font-semibold tracking-widest text-zinc-400 uppercase mb-1">
-                        02 / One-Motion Release
-                      </div>
+                    <div className="transition-opacity duration-300">
                       <h3 className="text-2xl sm:text-4xl font-bold tracking-tight text-white">
                         Designed to disappear.
                       </h3>
-                      <p className="text-sm sm:text-base text-zinc-300 mt-2 leading-relaxed">
-                        Stainless steel pivot bolts smoothly rotate the front frame downwards toward the wall.
+                      <p className="text-sm sm:text-base text-zinc-300 mt-2">
+                        Stay arms release to lower the frame smoothly toward the wall.
                       </p>
                     </div>
                   )}
 
                   {activeTextIdx === 2 && (
-                    <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-                      <div className="text-xs sm:text-sm font-semibold tracking-widest text-emerald-400 uppercase mb-1">
-                        03 / Zero Footprint
-                      </div>
+                    <div className="transition-opacity duration-300">
                       <h3 className="text-2xl sm:text-4xl font-bold tracking-tight text-white">
                         Fold it away when you don’t.
                       </h3>
-                      <p className="text-sm sm:text-base text-zinc-300 mt-2 leading-relaxed">
-                        More space. Same wall. The entire assembly rests virtually flat.
+                      <p className="text-sm sm:text-base text-zinc-300 mt-2">
+                        More space. Same wall. Rests almost flat against the mounting wall.
                       </p>
                     </div>
                   )}
@@ -235,10 +202,9 @@ export default function FoldawayScrollExperience() {
               </div>
             </div>
           ) : (
-            /* Reduced motion accessible side-by-side view */
             <div className="w-full py-12">
               <div className="text-center mb-10">
-                <h2 className="text-3xl font-bold">How The Foldaway Works</h2>
+                <h2 className="text-3xl font-bold">The Foldaway Design</h2>
                 <p className="text-zinc-400 text-sm mt-2">
                   Space when you need it. Gone when you don’t.
                 </p>
@@ -258,7 +224,7 @@ export default function FoldawayScrollExperience() {
                     Open when you need it
                   </h4>
                   <p className="text-zinc-400 text-sm mt-2">
-                    Horizontal position provides up to 15.6m of drying space for full bedding and wash loads.
+                    Horizontal position for hanging laundry.
                   </p>
                 </div>
 
@@ -275,7 +241,7 @@ export default function FoldawayScrollExperience() {
                     Fold it away when you don’t
                   </h4>
                   <p className="text-zinc-400 text-sm mt-2">
-                    Folds flush against the mounting surface, instantly restoring your patio, courtyard, or laundry area.
+                    Folds flat against the wall to allow the area to be reused.
                   </p>
                 </div>
               </div>
@@ -283,19 +249,15 @@ export default function FoldawayScrollExperience() {
           )}
         </div>
 
-        {/* Bottom Interactive Progress & CTA Bar */}
+        {/* Bottom Control & CTA Bar */}
         <div className="pb-6 sm:pb-8 px-4 sm:px-8 max-w-7xl mx-auto w-full z-20 flex flex-col sm:flex-row items-center justify-between gap-4">
-          {/* Scroll instruction indicator */}
           <div className="flex items-center gap-3 text-zinc-400 text-xs">
             <span className="inline-flex p-1.5 rounded-full bg-white/10 text-white animate-bounce">
               <ArrowDown className="w-3.5 h-3.5" />
             </span>
-            <span>
-              Scroll down to fold • Scroll up to open
-            </span>
+            <span>Scroll down to fold • Scroll up to open</span>
           </div>
 
-          {/* Progress track bar */}
           <div className="w-full sm:w-64 bg-zinc-800 h-1.5 rounded-full overflow-hidden">
             <div
               className="bg-white h-full transition-all duration-75"
@@ -303,7 +265,6 @@ export default function FoldawayScrollExperience() {
             />
           </div>
 
-          {/* CTA Link */}
           <Link
             href="/#order"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-zinc-950 text-xs font-bold uppercase tracking-wider hover:bg-zinc-200 transition-colors shadow-sm"

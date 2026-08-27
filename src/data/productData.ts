@@ -3,14 +3,12 @@ export interface ProductSize {
   nominalLength: string;
   width: string;
   label: string;
-  linesCount: number;
-  lineSpacing: string;
-  totalHangingSpace: string;
-  sheetCompatibility: string;
+  linesCount?: number;
+  lineSpacing?: string;
+  totalHangingSpace?: string;
+  sheetCompatibility?: string;
   isPopular?: boolean;
   minWallSpaceRequired: string;
-  diyPriceInclVat: number;
-  assembledPriceInclVat: number;
 }
 
 export interface FrameColor {
@@ -28,16 +26,6 @@ export interface KitComponent {
   description: string;
 }
 
-export interface ReviewItem {
-  id: string;
-  author: string;
-  location: string;
-  rating: number;
-  date: string;
-  title: string;
-  content: string;
-}
-
 export const PRODUCT_DATA = {
   brand: {
     name: 'Mr Washline',
@@ -52,17 +40,16 @@ export const PRODUCT_DATA = {
     guarantee:
       '100% satisfaction / money-back guarantee in the event that the customer is not satisfied with the product or service.',
     rating: {
-      score: 4.9,
+      score: 'Excellent',
       reviewCount: 46,
-      label: 'Excellent',
+      summary: 'Rated Excellent based on 46 customer reviews.',
     },
   },
 
   pricing: {
     diyKitStartingPrice: 1760,
-    diyKitPriceRangeDisplay: 'R1,760 – R1,960 incl. VAT',
-    assembledStartingPrice: 1980,
-    assembledPriceRangeDisplay: 'R1,980 – R2,280 incl. VAT',
+    diyKitPriceDisplay: 'From R1,760 incl. VAT',
+    diyKitRangeDisplay: 'R1,760 – R1,960 incl. VAT',
     currency: 'ZAR',
     currencySymbol: 'R',
   },
@@ -72,21 +59,21 @@ export const PRODUCT_DATA = {
       id: 'charcoal',
       name: 'Charcoal',
       hex: '#27272A',
-      description: 'Contemporary deep architectural charcoal, epoxy powder-coated.',
+      description: 'Charcoal epoxy powder-coated finish.',
       image: '/images/products/01-open-charcoal.webp',
     },
     {
       id: 'white',
       name: 'White',
       hex: '#F4F4F5',
-      description: 'Clean architectural brilliant white, epoxy powder-coated.',
+      description: 'White epoxy powder-coated finish.',
       image: '/images/products/01-open-charcoal.webp',
     },
     {
       id: 'bronze',
       name: 'Bronze',
       hex: '#524036',
-      description: 'Rich metallic architectural bronze, epoxy powder-coated.',
+      description: 'Bronze epoxy powder-coated finish.',
       image: '/images/products/01-open-charcoal.webp',
     },
   ] as FrameColor[],
@@ -94,115 +81,98 @@ export const PRODUCT_DATA = {
   sizes: [
     {
       id: '1.0m',
-      nominalLength: '1.0m',
-      width: '80cm',
+      nominalLength: '1.0 m',
+      width: '80 cm',
       label: '1.0 metres × 80 cm',
-      linesCount: 6,
-      lineSpacing: 'approx. 10 cm',
-      totalHangingSpace: 'approx. 6.0 metres',
-      sheetCompatibility: 'Towels, delicates, shirts and baby linen',
-      minWallSpaceRequired: '1.1 metres (size + 10 cm clearance)',
-      diyPriceInclVat: 1760,
-      assembledPriceInclVat: 1980,
+      minWallSpaceRequired: '1.1 metres (nominal size + approx. 10 cm clearance)',
     },
     {
       id: '1.5m',
-      nominalLength: '1.5m',
-      width: '80cm',
+      nominalLength: '1.5 m',
+      width: '80 cm',
       label: '1.5 metres × 80 cm',
-      linesCount: 6,
-      lineSpacing: 'approx. 10 cm',
-      totalHangingSpace: 'approx. 9.0 metres',
-      sheetCompatibility: 'Single sheets, bath towels and everyday laundry loads',
-      minWallSpaceRequired: '1.6 metres (size + 10 cm clearance)',
-      diyPriceInclVat: 1810,
-      assembledPriceInclVat: 2050,
+      minWallSpaceRequired: '1.6 metres (nominal size + approx. 10 cm clearance)',
     },
     {
       id: '2.0m',
-      nominalLength: '2.0m',
-      width: '80cm',
+      nominalLength: '2.0 m',
+      width: '80 cm',
       label: '2.0 metres × 80 cm',
-      linesCount: 6,
-      lineSpacing: 'approx. 10 cm',
-      totalHangingSpace: 'approx. 12.0 metres',
-      sheetCompatibility: 'Double sheets and medium family washing loads',
-      minWallSpaceRequired: '2.1 metres (size + 10 cm clearance)',
-      diyPriceInclVat: 1860,
-      assembledPriceInclVat: 2120,
+      minWallSpaceRequired: '2.1 metres (nominal size + approx. 10 cm clearance)',
     },
     {
       id: '2.3m',
-      nominalLength: '2.3m',
-      width: '80cm',
+      nominalLength: '2.3 m',
+      width: '80 cm',
       label: '2.3 metres × 80 cm',
       linesCount: 6,
       lineSpacing: 'approx. 10 cm',
       totalHangingSpace: 'approx. 13.5 metres',
       sheetCompatibility:
-        'Accommodates normal Queen-size fitted sheets and duvet covers without requiring them to be folded back',
+        'Accommodates normal queen-size fitted sheets and duvet covers without requiring them to be folded back.',
       isPopular: true,
-      minWallSpaceRequired: '2.4 metres (size + 10 cm clearance)',
-      diyPriceInclVat: 1910,
-      assembledPriceInclVat: 2200,
+      minWallSpaceRequired: '2.4 metres (nominal size + approx. 10 cm clearance)',
     },
     {
       id: '2.6m',
-      nominalLength: '2.6m',
-      width: '80cm',
+      nominalLength: '2.6 m',
+      width: '80 cm',
       label: '2.6 metres × 80 cm',
-      linesCount: 6,
-      lineSpacing: 'approx. 10 cm',
-      totalHangingSpace: 'approx. 15.6 metres',
-      sheetCompatibility: 'Caters for King-size sheets and full family wash loads',
-      minWallSpaceRequired: '2.7 metres (size + 10 cm clearance)',
-      diyPriceInclVat: 1960,
-      assembledPriceInclVat: 2280,
+      sheetCompatibility: 'Caters for king-size sheets.',
+      minWallSpaceRequired: '2.7 metres (nominal size + approx. 10 cm clearance)',
     },
   ] as ProductSize[],
+
+  sizeAdvice: {
+    title: 'Choosing your size',
+    popularNote:
+      'Our most popular Foldaway is the 2.3 m × 80 cm model. The longest model manufactured is 2.6 m. Mr Washline recommends using a second or third washing line rather than going larger where additional hanging space is required.',
+    practicalAdvantage:
+      'Multiple Foldaways can be positioned strategically to make use of morning and afternoon sun or to place one under cover during rainy periods.',
+  },
 
   kitComponents: [
     {
       number: 1,
       name: 'Front and back bars',
-      quantity: '2 aluminium bars',
-      description: 'Precision pre-drilled architectural aluminium bars with stringing holes.',
+      quantity: 'Aluminium bars',
+      description: 'Aluminium front and back bars.',
     },
     {
       number: 2,
       name: 'Left and right side arms',
-      quantity: '2 support arms with stays',
-      description: 'Epoxy powder-coated side arms with factory pivot hinges and stay mechanisms.',
+      quantity: 'Left and right arms',
+      description: 'Left and right side arms with support stays.',
     },
     {
       number: 3,
       name: 'Couch screws × 4',
       quantity: '4 units',
-      description: 'Heavy-duty masonry coach/couch screws for rock-solid wall mounting.',
+      description: 'Couch screws for wall mounting.',
     },
     {
       number: 4,
       name: 'Washers × 4',
       quantity: '4 units',
-      description: 'Stainless steel washers providing even clamping pressure against wall plugs.',
+      description: 'Washers × 4.',
     },
     {
       number: 5,
       name: 'Wall plugs × 4',
       quantity: '4 units',
-      description: 'High-expansion nylon masonry plugs tailored for concrete, brick and block walls.',
+      description: 'Wall plugs × 4.',
     },
     {
       number: 6,
       name: 'Wing nut line tensioner',
       quantity: '1 unit',
-      description: 'Quick-adjust wing nut tensioning hardware to maintain taut washing cords.',
+      description: 'Wing nut line tensioner.',
     },
     {
       number: 7,
       name: 'Washing line cord',
-      quantity: '1 continuous roll',
-      description: 'UV-resistant, weather-tested heavy-duty washing line cord.',
+      quantity: 'Cord',
+      description: 'Washing line cord.',
     },
   ] as KitComponent[],
 
@@ -216,7 +186,7 @@ export const PRODUCT_DATA = {
       'Assembly is straightforward. A rubber mallet is required to connect the arms to the front and back bars.',
     distinction: {
       standard: 'STANDARD FOLDAWAY: Delivered fully assembled and strung.',
-      diy: 'DIY FOLDAWAY KIT: Delivered in kit form for easier transportation and requires basic assembly.',
+      diy: 'DIY FOLDAWAY KIT: Delivered in kit form in a strong cardboard tube for easier transportation and requires basic assembly.',
     },
   },
 
@@ -226,26 +196,26 @@ export const PRODUCT_DATA = {
       title: 'Weatherproof',
       tagline: 'Aluminium does not rust',
       summary:
-        'The Foldaway frame is made from aluminium. Unlike conventional steel or galvanised-steel washing lines, aluminium does not rust. Aluminium is lightweight, helping make the washing line easy to operate. Frames are professionally epoxy powder-coated to provide a weather-resistant finish. Machine screws used in the assembly are stainless steel.',
+        'The Foldaway frame is made from aluminium. Unlike conventional steel or galvanised-steel washing lines, aluminium does not rust. Aluminium is lightweight, helping make the washing line easy to operate. Frames are professionally epoxy powder-coated to provide a weatherproof finish. Machine screws used in the assembly are stainless steel.',
       bullets: [
-        'Frame manufactured from rust-resistant aluminium',
-        'Professionally epoxy powder-coated protective finish',
-        'Assembly machine screws are marine-grade stainless steel',
-        'Lightweight structure ensures effortless operation',
+        'Frame made from aluminium',
+        'Professionally epoxy powder-coated to provide a weatherproof finish',
+        'Machine screws used in assembly are stainless steel',
+        'Lightweight aluminium makes the washing line easy to operate',
       ],
       image: '/images/products/06-aluminium-detail.webp',
     },
     {
       id: 'easy-to-operate',
       title: 'Easy to Operate',
-      tagline: 'Simple stay/support arm mechanism',
+      tagline: 'Simple stay/support arms',
       summary:
-        'The Foldaway uses simple stay/support arms for raising and lowering the frame. The smooth pivot mechanism allows one-motion raising and locking into position.',
+        'The Foldaway uses simple stay/support arms for raising and lowering the frame.',
       bullets: [
-        'Simple stay/support arms lock firmly in raised position',
-        'Effortless pivot mechanism engineered for longevity',
-        'Stainless pivot bolts guarantee smooth motion',
-        'Lightweight aluminium frame raises without strain',
+        'Simple stay/support arms for raising and lowering the frame',
+        'Smooth pivot mechanism',
+        'Stainless steel machine screws used in construction',
+        'Lightweight aluminium construction',
       ],
       image: '/images/products/05-mechanism-closeup.webp',
     },
@@ -254,26 +224,27 @@ export const PRODUCT_DATA = {
       title: 'Space Saving',
       tagline: 'More space. Same wall.',
       summary:
-        'The Foldaway can be lowered against the mounting wall when not in use, allowing the area to be reused. Reclaims valuable courtyard, patio, garage, or laundry floor space.',
+        'The Foldaway can be lowered against the mounting wall when not in use, allowing the area to be reused.',
       bullets: [
         'Folds down flat against the wall when not in use',
-        'Reclaims open area for entertainment, parking or gardening',
-        'Zero floor footprint compared to bulky rotary airers',
-        'Clean, unobtrusive architectural profile',
+        'Allows the area to be reused',
+        'Space-saving fold-down design',
+        'Clean wall-mounted profile',
       ],
       image: '/images/products/04-folded-charcoal.webp',
     },
     {
       id: 'versatile',
-      title: 'Versatile Application',
+      title: 'Versatile',
       tagline: 'Indoors. Outdoors. Wherever space matters.',
       summary:
-        'Engineered for modern lifestyle architecture: courtyards, under roof eaves, pool areas, laundry rooms, and garages.',
+        'Suitable for installation in spaces such as courtyards, under roof eaves, pool areas, laundry rooms, and garages.',
       bullets: [
-        'Courtyards & townhouse exterior walls',
-        'Under roof eaves & covered verandahs',
-        'Pool areas & braai patios',
-        'Indoor laundry rooms & garage utility walls',
+        'Courtyards',
+        'Under roof eaves',
+        'Pool areas',
+        'Laundry rooms',
+        'Garages',
       ],
       image: '/images/products/01-open-charcoal.webp',
     },
@@ -285,8 +256,9 @@ export const PRODUCT_DATA = {
     obstacleGuidance:
       'Avoid placing the brackets where pipes, cables or other fixtures interfere.',
     spacerBlockGuidance:
-      'Spacer blocks may be needed where obstacles prevent the back bar from sitting correctly. Spacer blocks can also be used when installing onto suitable vibracrete walls where the upright pillars obstruct the back bar.',
-    mountingHeight: 'Mr Washline documentation recommends mounting the washing line at approximately 1.85 metres high.',
+      'Spacer blocks may be needed where obstacles prevent the back bar from sitting correctly. Spacer blocks can also be used when installing onto suitable vibracrete walls where the upright pillars obstruct the back bar. Spacer blocks are supplied on request.',
+    mountingHeight:
+      'Mr Washline recommends mounting the washing line at approximately 1.85 metres high.',
     fastenersSupplied:
       'For the fully assembled Foldaway model, screws and mounting instructions are supplied.',
     clearanceRule:
@@ -297,16 +269,16 @@ export const PRODUCT_DATA = {
     title: 'Delivery Information',
     centralPolicy:
       'Delivery available across South Africa. Delivery charges or free-delivery eligibility are confirmed during checkout or quotation.',
-    leadTime: 'Approximately 1–3 working days dispatch.',
-    capeTownFreeDeliveryDescription:
-      'Mr Washline provides weekly free delivery around Cape Town City Centre and nearby areas including:',
+    leadTime: 'Approximately 1–3 working days.',
+    capeTownDescription:
+      'Delivery areas include Cape Town City Centre and nearby areas (Atlantic Seaboard from Sea Point to Llandudno, Blouberg and surrounds from Milnerton to Melkbosstrand, City and surrounds, False Bay as far as Simon’s Town, Northern suburbs as far as Brackenfell, Southern Peninsula including Hout Bay, Kommetjie and Noordhoek but not as far as Scarborough, and Southern suburbs). Delivery charges are confirmed during quotation or checkout.',
     capeTownZones: [
       'Atlantic Seaboard from Sea Point to Llandudno',
       'Blouberg and surrounds from Milnerton to Melkbosstrand',
       'City and surrounds',
       'False Bay as far as Simon’s Town',
       'Northern suburbs as far as Brackenfell',
-      'Southern Peninsula including Hout Bay, Kommetjie and Noordhoek but not as far as Scarborough',
+      'Southern Peninsula including Hout Bay, Kommetjie and Noordhoek (not as far as Scarborough)',
       'Southern suburbs',
     ],
   },
@@ -316,74 +288,31 @@ export const PRODUCT_DATA = {
       stepNumber: '01',
       title: 'Choose your size',
       description:
-        'Select from 1.0m to 2.6m. Remember: you require approximately 10 cm of additional wall space (e.g., a 2.3 m Foldaway requires ~2.4 m of wall space).',
+        'Customers require approximately 10 cm of additional wall space. For example, a 2.3 m Foldaway requires approximately 2.4 m of wall space.',
     },
     {
       stepNumber: '02',
-      title: 'Select colour & format',
+      title: 'Place an order online or contact Mr Washline',
       description:
-        'Choose your epoxy powder-coated frame colour (White, Charcoal, or Bronze) and format (Standard Assembled or DIY Tube Kit).',
+        'Select your frame colour (White, Charcoal, or Bronze) and order online or contact us directly.',
     },
     {
       stepNumber: '03',
-      title: 'Place order or request quote',
+      title: 'Provide your order details',
       description:
-        'Order online or send an enquiry with your required size, customer name, delivery street address, and contact number.',
+        'Provide the required size, customer name, delivery street address, and contact number when requesting a quotation.',
     },
     {
       stepNumber: '04',
-      title: 'Confirmation & Delivery',
+      title: 'Order confirmation',
       description:
-        'Mr Washline confirms the order and delivery details. Delivered in 1–3 working days.',
+        'Mr Washline confirms the order and delivery information. Lead time is approximately 1–3 working days.',
     },
   ],
 
-  reviews: [
-    {
-      id: 'rev-1',
-      author: 'David V.R.',
-      location: 'Constantia, Cape Town',
-      rating: 5,
-      date: 'Verified Customer',
-      title: 'Superb build quality & space saver',
-      content:
-        'Ordered the 2.3m charcoal Foldaway for our courtyard wall. Takes our Queen fitted sheets easily without bunching. Folds completely out of the way when the kids play outside. Extremely durable aluminium.',
-    },
-    {
-      id: 'rev-2',
-      author: 'Megan K.',
-      location: 'Durbanville, Western Cape',
-      rating: 5,
-      date: 'Verified Customer',
-      title: 'Delivered in 2 days, super easy DIY assembly',
-      content:
-        'The cardboard tube transport made it so convenient to bring home. Used a rubber mallet as instructed and had it assembled in under 15 minutes. Very sturdy powder coating.',
-    },
-    {
-      id: 'rev-3',
-      author: 'Johan S.',
-      location: 'Bryanston, Johannesburg',
-      rating: 5,
-      date: 'Verified Customer',
-      title: 'Second one we’ve bought over 10 years',
-      content:
-        'We had our first Mr Washline for over 8 years in our previous house with zero rust. When we moved, installing another one was our first priority. Best foldaway line in SA.',
-    },
-    {
-      id: 'rev-4',
-      author: 'Annelize B.',
-      location: 'Camps Bay, Cape Town',
-      rating: 5,
-      date: 'Verified Customer',
-      title: 'Corrosion-free coastal performance',
-      content:
-        'Living right by the ocean, conventional lines rust within months. The aluminium and stainless screws on the Foldaway still look brand new after heavy winter storms.',
-    },
-  ] as ReviewItem[],
-
   contact: {
     headOffice: {
-      label: 'Cape Town Head Office & Factory',
+      label: 'Cape Town (Head Office)',
       companyName: 'Mr Washline',
       addressLines: [
         'Unit D3, Prime Park',

@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import { 
   ShieldCheck, 
   Sparkles, 
@@ -11,7 +10,8 @@ import {
   Warehouse, 
   Waves, 
   Umbrella, 
-  Building2 
+  Building2,
+  Sun
 } from 'lucide-react';
 import { PRODUCT_DATA } from '@/data/productData';
 
@@ -20,50 +20,50 @@ export default function ProductOverview() {
     {
       icon: ShieldCheck,
       title: 'Rust-Resistant Aluminium',
-      desc: 'Constructed from lightweight structural aluminium. Unlike steel, it does not rust.',
+      desc: 'The Foldaway frame is made from aluminium. Unlike conventional steel or galvanised-steel washing lines, aluminium does not rust.',
     },
     {
       icon: Sparkles,
       title: 'Epoxy Powder-Coated Finish',
-      desc: 'Professionally baked epoxy coating protects against harsh coastal sun and rain.',
+      desc: 'Professionally epoxy powder-coated to provide a weatherproof finish.',
     },
     {
       icon: Feather,
       title: 'Lightweight Operation',
-      desc: 'Effortless to raise, lock, and lower. Machine screws used in construction are stainless steel.',
+      desc: 'Aluminium is lightweight, helping make the washing line easy to operate. Machine screws used in construction are stainless steel.',
     },
     {
       icon: Maximize2,
       title: 'Space-Saving Fold-Down Design',
-      desc: 'Collapses virtually flat against the wall, liberating your floor and courtyard space.',
+      desc: 'Can be lowered against the mounting wall when not in use, allowing the area to be reused.',
     },
   ];
 
   const useCases = [
     {
-      title: 'Courtyards & Patios',
+      title: 'Courtyards',
       icon: Building2,
-      desc: 'Perfect for townhouse perimeter walls and garden patios where floor space is premium.',
+      desc: 'Space-saving fold-down installation on exterior courtyard walls.',
     },
     {
       title: 'Under Roof Eaves',
       icon: Umbrella,
-      desc: 'Protected drying out of direct rain while catching warm breezes along exterior walls.',
+      desc: 'Protected drying along exterior walls and under roof eaves.',
     },
     {
-      title: 'Pool & Entertainment Areas',
+      title: 'Pool Areas',
       icon: Waves,
-      desc: 'Discreet drying for beach and pool towels that folds away before guests arrive.',
+      desc: 'Convenient towel and swimwear drying near pool patios.',
     },
     {
       title: 'Laundry Rooms',
       icon: Home,
-      desc: 'Clean wall-mounted indoor drying for rainy winter seasons and delicate items.',
+      desc: 'Wall-mounted indoor drying for laundry rooms.',
     },
     {
-      title: 'Garages & Utility Areas',
+      title: 'Garages',
       icon: Warehouse,
-      desc: 'Zero floor footprint when folded, keeping your car and storage pathways unobstructed.',
+      desc: 'Utility wall mounting that folds flat when not in use.',
     },
   ];
 
@@ -73,13 +73,13 @@ export default function ProductOverview() {
         {/* Section Header */}
         <div className="max-w-3xl">
           <span className="text-xs font-bold tracking-widest uppercase text-zinc-500">
-            Original South African Design
+            South African Manufactured Aluminium Foldaway
           </span>
           <h2 className="mt-2 text-3xl sm:text-5xl font-extrabold tracking-tight text-zinc-950">
             Designed around the way you live.
           </h2>
-          <p className="mt-4 text-lg text-zinc-600 leading-relaxed">
-            The Foldaway is a cleverly designed aluminium fold-down clothesline available in multiple sizes to suit modern homes where space matters.
+          <p className="mt-4 text-base sm:text-lg text-zinc-600 leading-relaxed">
+            The Foldaway is a cleverly designed aluminium fold-down washing line available in multiple sizes to suit modern homes where space matters.
           </p>
         </div>
 
@@ -90,30 +90,43 @@ export default function ProductOverview() {
             return (
               <div
                 key={idx}
-                className="p-6 rounded-2xl bg-zinc-50 border border-zinc-200/80 hover:border-zinc-300 transition-all group"
+                className="p-6 rounded-2xl bg-zinc-50 border border-zinc-200/80 hover:border-zinc-300 transition-all"
               >
-                <div className="w-12 h-12 rounded-xl bg-zinc-900 text-white flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+                <div className="w-12 h-12 rounded-xl bg-zinc-900 text-white flex items-center justify-center mb-5">
                   <Icon className="w-6 h-6" />
                 </div>
                 <h3 className="text-lg font-bold text-zinc-950">{h.title}</h3>
-                <p className="mt-2 text-sm text-zinc-600 leading-relaxed">{h.desc}</p>
+                <p className="mt-2 text-xs sm:text-sm text-zinc-600 leading-relaxed">{h.desc}</p>
               </div>
             );
           })}
         </div>
 
+        {/* Section 14: Official Size Advice & Multi-Line Advantage */}
+        <div className="mt-16 p-8 rounded-3xl bg-zinc-50 border border-zinc-200 space-y-4">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-zinc-500">
+            <Sun className="w-4 h-4 text-amber-500" />
+            <span>{PRODUCT_DATA.sizeAdvice.title}</span>
+          </div>
+
+          <p className="text-sm sm:text-base text-zinc-800 leading-relaxed">
+            {PRODUCT_DATA.sizeAdvice.popularNote}
+          </p>
+
+          <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed pt-2 border-t border-zinc-200/80">
+            <strong className="text-zinc-900">Practical advantage:</strong> {PRODUCT_DATA.sizeAdvice.practicalAdvantage}
+          </p>
+        </div>
+
         {/* Where It Works Subsection */}
-        <div className="mt-24 pt-16 border-t border-zinc-200">
-          <div className="text-center max-w-2xl mx-auto mb-14">
+        <div className="mt-20 pt-16 border-t border-zinc-200">
+          <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="text-xs font-bold tracking-widest uppercase text-zinc-500">
-              Architectural Versatility
+              Installation Locations
             </span>
             <h3 className="mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight text-zinc-950">
               Indoors. Outdoors. Wherever space matters.
             </h3>
-            <p className="mt-3 text-zinc-600 text-sm sm:text-base">
-              Mounted securely on exterior masonry, perimeter walls, or indoor laundry spaces.
-            </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
@@ -122,11 +135,11 @@ export default function ProductOverview() {
               return (
                 <div
                   key={idx}
-                  className="p-5 rounded-xl bg-zinc-50/70 border border-zinc-200 hover:bg-zinc-100/80 transition-colors flex flex-col justify-between"
+                  className="p-5 rounded-xl bg-zinc-50 border border-zinc-200 flex flex-col justify-between"
                 >
                   <div>
-                    <div className="p-2.5 rounded-lg bg-zinc-200 text-zinc-900 w-fit mb-3">
-                      <Icon className="w-5 h-5" />
+                    <div className="p-2 rounded-lg bg-zinc-200 text-zinc-900 w-fit mb-3">
+                      <Icon className="w-4 h-4" />
                     </div>
                     <h4 className="font-bold text-zinc-900 text-sm">{uc.title}</h4>
                     <p className="text-xs text-zinc-600 mt-1.5 leading-relaxed">

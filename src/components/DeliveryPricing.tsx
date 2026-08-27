@@ -7,8 +7,6 @@ import {
   MapPin, 
   Check, 
   Clock, 
-  ShieldCheck, 
-  Info, 
   Phone,
   ArrowRight
 } from 'lucide-react';
@@ -25,7 +23,7 @@ export default function DeliveryPricing() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-xs font-bold tracking-widest uppercase text-zinc-500">
-            Transparent Pricing & Regional Delivery
+            Pricing & Delivery Information
           </span>
           <h2 className="mt-2 text-3xl sm:text-5xl font-extrabold tracking-tight text-zinc-950">
             Prices & Delivery Areas
@@ -35,21 +33,21 @@ export default function DeliveryPricing() {
           </p>
         </div>
 
-        {/* Master Pricing Matrix Table */}
+        {/* Master Size Matrix Table */}
         <div className="bg-zinc-50 rounded-3xl p-6 sm:p-10 border border-zinc-200 shadow-sm mb-16 overflow-x-auto">
           <div className="min-w-[640px]">
             <div className="flex items-center justify-between pb-6 border-b border-zinc-200 mb-6">
               <div>
                 <h3 className="text-xl font-bold text-zinc-950">
-                  Foldaway Price Schedule (incl. VAT)
+                  The Foldaway DIY Assemble Kit
                 </h3>
                 <p className="text-xs text-zinc-500 mt-0.5">
-                  Manufactured from rust-resistant aluminium with epoxy powder-coated finish
+                  Display: {PRODUCT_DATA.pricing.diyKitRangeDisplay}
                 </p>
               </div>
 
               <div className="text-xs font-bold text-zinc-600 bg-white px-3 py-1.5 rounded-lg border border-zinc-200">
-                Lead Time: 1–3 Working Days
+                Lead Time: approx. 1–3 working days
               </div>
             </div>
 
@@ -57,11 +55,10 @@ export default function DeliveryPricing() {
               <thead>
                 <tr className="border-b border-zinc-200 text-xs uppercase font-bold text-zinc-500">
                   <th className="pb-3">Size Model</th>
-                  <th className="pb-3">Drying Line Space</th>
-                  <th className="pb-3">Bedding Capacity</th>
-                  <th className="pb-3">DIY Tube Kit</th>
-                  <th className="pb-3">Standard Assembled</th>
-                  <th className="pb-3 text-right">Order</th>
+                  <th className="pb-3">Wall Space Required</th>
+                  <th className="pb-3">Bedding Compatibility</th>
+                  <th className="pb-3">Price Status</th>
+                  <th className="pb-3 text-right">Select</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-200/70">
@@ -71,28 +68,25 @@ export default function DeliveryPricing() {
                       <span>{s.label}</span>
                       {s.isPopular && (
                         <span className="text-[10px] uppercase font-bold text-amber-800 bg-amber-100 px-1.5 py-0.5 rounded">
-                          Popular
+                          Most Popular
                         </span>
                       )}
                     </td>
-                    <td className="py-4 text-zinc-600 font-mono text-xs">
-                      {s.totalHangingSpace}
+                    <td className="py-4 text-zinc-600 text-xs">
+                      {s.minWallSpaceRequired}
                     </td>
-                    <td className="py-4 text-zinc-600 text-xs max-w-[200px]">
-                      {s.sheetCompatibility}
+                    <td className="py-4 text-zinc-600 text-xs max-w-[260px]">
+                      {s.sheetCompatibility || 'Standard laundry loads'}
                     </td>
-                    <td className="py-4 font-bold text-zinc-950">
-                      R{s.diyPriceInclVat.toLocaleString()}
-                    </td>
-                    <td className="py-4 font-bold text-zinc-950">
-                      R{s.assembledPriceInclVat.toLocaleString()}
+                    <td className="py-4 font-medium text-zinc-900 text-xs">
+                      {PRODUCT_DATA.pricing.diyKitPriceDisplay}
                     </td>
                     <td className="py-4 text-right">
                       <Link
                         href="/#order"
                         className="inline-flex items-center gap-1 text-xs font-bold text-zinc-900 hover:text-zinc-600 underline"
                       >
-                        <span>Select</span>
+                        <span>Choose</span>
                         <ArrowRight className="w-3 h-3" />
                       </Link>
                     </td>
@@ -115,7 +109,7 @@ export default function DeliveryPricing() {
                   : 'text-zinc-600 hover:text-zinc-950'
               }`}
             >
-              Cape Town (Weekly Free Delivery)
+              Cape Town Delivery Areas
             </button>
 
             <button
@@ -145,16 +139,13 @@ export default function DeliveryPricing() {
 
           {/* Active Tab Content */}
           {activeTab === 'capetown' && (
-            <div id="cape-town" className="p-8 rounded-3xl bg-zinc-50 border border-zinc-200 animate-in fade-in duration-200">
+            <div id="cape-town" className="p-8 rounded-3xl bg-zinc-50 border border-zinc-200">
               <div className="max-w-3xl mb-6">
-                <div className="inline-flex items-center gap-2 text-emerald-700 font-bold text-xs uppercase tracking-wider mb-2">
-                  <Check className="w-4 h-4" /> Weekly Free Delivery Service
-                </div>
                 <h4 className="text-xl font-bold text-zinc-950">
                   Cape Town City Centre & Surrounding Areas
                 </h4>
-                <p className="text-sm text-zinc-600 mt-1">
-                  {delivery.capeTownFreeDeliveryDescription}
+                <p className="text-sm text-zinc-600 mt-2 leading-relaxed">
+                  {delivery.capeTownDescription}
                 </p>
               </div>
 
@@ -177,16 +168,13 @@ export default function DeliveryPricing() {
           )}
 
           {activeTab === 'jhb' && (
-            <div id="johannesburg" className="p-8 rounded-3xl bg-zinc-50 border border-zinc-200 animate-in fade-in duration-200">
+            <div id="johannesburg" className="p-8 rounded-3xl bg-zinc-50 border border-zinc-200">
               <div className="max-w-2xl">
-                <div className="text-zinc-500 font-bold text-xs uppercase tracking-wider mb-2">
-                  Gauteng Supply & Installation
-                </div>
                 <h4 className="text-xl font-bold text-zinc-950">
                   {PRODUCT_DATA.contact.johannesburg.label}
                 </h4>
                 <p className="text-sm text-zinc-600 mt-2 leading-relaxed">
-                  Dedicated local installation and supply services across Johannesburg and surrounding areas. Contact our JHB team directly for quotation and booking.
+                  For Johannesburg installation enquiries and supply details, contact our Johannesburg team directly.
                 </p>
 
                 <div className="mt-6 flex flex-wrap gap-4 text-xs font-semibold">
@@ -217,22 +205,19 @@ export default function DeliveryPricing() {
           )}
 
           {activeTab === 'nationwide' && (
-            <div id="nationwide" className="p-8 rounded-3xl bg-zinc-50 border border-zinc-200 animate-in fade-in duration-200">
+            <div id="nationwide" className="p-8 rounded-3xl bg-zinc-50 border border-zinc-200">
               <div className="max-w-2xl">
-                <div className="text-zinc-500 font-bold text-xs uppercase tracking-wider mb-2">
-                  All Other Areas in South Africa
-                </div>
                 <h4 className="text-xl font-bold text-zinc-950">
-                  Nationwide Courier Dispatch in Cardboard Tube
+                  Nationwide Delivery
                 </h4>
                 <p className="text-sm text-zinc-600 mt-2 leading-relaxed">
-                  Our DIY Assemble Kit is securely packed inside a compact ~10 cm diameter cardboard tube for fast, safe road or air freight across South Africa (Durban, Port Elizabeth, Bloemfontein, Pretoria, Garden Route, etc.).
+                  Delivery available across South Africa. The DIY Assemble Kit is delivered in kit form inside a strong cardboard tube (approx. 10 cm in diameter), making it convenient for transport by road or air.
                 </p>
 
                 <div className="mt-6 p-4 rounded-xl bg-white border border-zinc-200 text-xs text-zinc-600 flex items-center gap-3">
                   <Truck className="w-4 h-4 text-zinc-900" />
                   <span>
-                    Dispatch lead time: 1–3 working days. Courier fee confirmed at quotation or checkout.
+                    Delivery charges or free-delivery eligibility are confirmed during checkout or quotation.
                   </span>
                 </div>
               </div>

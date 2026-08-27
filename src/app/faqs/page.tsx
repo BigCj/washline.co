@@ -2,44 +2,44 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import CartDrawer from '@/components/CartDrawer';
 import Link from 'next/link';
-import { HelpCircle, ChevronRight, MessageSquare } from 'lucide-react';
+import { HelpCircle, MessageSquare } from 'lucide-react';
 import { PRODUCT_DATA } from '@/data/productData';
 
 export const metadata = {
   title: 'Frequently Asked Questions (FAQs) | Mr Washline',
   description:
-    'Answers to common questions about Mr Washline foldaway washing lines, sizes, materials, rust resistance, DIY kit assembly, and delivery.',
+    'Factual answers to common questions about Mr Washline foldaway washing lines, sizes, materials, DIY assemble kits, and delivery.',
 };
 
 export default function FaqsPage() {
   const faqs = [
     {
       q: 'Does the Foldaway washing line rust?',
-      a: 'No. The Foldaway frame is made from aluminium. Unlike conventional steel or galvanised-steel washing lines, aluminium does not rust. Furthermore, frames are professionally epoxy powder-coated for weather resistance, and all assembly machine screws are stainless steel.',
+      a: 'The Foldaway frame is made from aluminium. Unlike conventional steel or galvanised-steel washing lines, aluminium does not rust. Frames are professionally epoxy powder-coated to provide a weatherproof finish, and machine screws used in assembly are stainless steel.',
     },
     {
       q: 'What is the difference between the Standard Foldaway and the DIY Assemble Kit?',
-      a: 'The Standard Foldaway is delivered fully assembled and strung, ready for immediate wall mounting. The DIY Foldaway Assemble Kit is delivered in kit form inside a compact cardboard tube (~10 cm diameter) for convenient road or air transport, and requires basic assembly with a rubber mallet.',
+      a: 'The Standard Foldaway is delivered completely assembled and strung. The DIY Assemble Kit is delivered in kit form in a strong cardboard tube (approx. 10 cm in diameter) for easier transportation and requires basic assembly using a rubber mallet.',
     },
     {
       q: 'Which size is best for Queen-size bedding?',
-      a: 'Our most popular size is the 2.3 metres × 80 cm model. It provides approximately 13.5 metres of drying space across 6 lines spaced approx. 10 cm apart, and accommodates normal Queen-size fitted sheets and duvet covers without requiring them to be folded back. If you have King-size sheets, we recommend the 2.6 m model.',
+      a: 'The 2.3 m × 80 cm model has approximately six lines spaced approximately 10 cm apart and provides approximately 13.5 metres of hanging space. It can accommodate normal queen-size fitted sheets and duvet covers without requiring them to be folded back. The 2.6 m model caters for king-size sheets.',
     },
     {
-      q: 'How much wall clearance is needed to mount a Foldaway?',
-      a: 'You require approximately 10 cm of additional wall space over the product nominal width. For example, a 2.3 m Foldaway requires approximately 2.4 m of clear wall space.',
+      q: 'How much wall clearance is needed?',
+      a: 'Customers require approximately 10 cm of additional wall space. For example, a 2.3 m Foldaway requires approximately 2.4 m of wall space.',
     },
     {
       q: 'What is the recommended mounting height?',
-      a: 'Mr Washline documentation recommends mounting the washing line at approximately 1.85 metres from ground level for optimal ergonomic reach and ground clearance for long sheets and trousers.',
+      a: 'Mr Washline recommends mounting the washing line at approximately 1.85 metres high.',
     },
     {
       q: 'Can the Foldaway be mounted onto Vibracrete walls?',
-      a: 'Yes, provided the vibracrete wall is structurally sound. Spacer blocks may be needed where the upright pillars obstruct the back bar from sitting flat against the wall.',
+      a: 'Yes, spacer blocks can be used when installing onto suitable vibracrete walls where the upright pillars obstruct the back bar. Spacer blocks are supplied on request.',
     },
     {
       q: 'What tools are required for the DIY Assemble Kit?',
-      a: 'A rubber mallet is required to connect the side arms to the front and back bars. A standard drill and masonry drill bit are required to install the supplied couch screws and wall plugs into your wall.',
+      a: 'A rubber mallet is required to connect the arms to the front and back bars.',
     },
     {
       q: 'What is your satisfaction guarantee?',
@@ -81,7 +81,7 @@ export default function FaqsPage() {
                 Frequently Asked Questions
               </h1>
               <p className="text-lg text-zinc-300 font-light mt-4 max-w-3xl leading-relaxed">
-                Everything you need to know about sizing, installation, materials, and ordering your Mr Washline Foldaway.
+                Factual information regarding sizes, installation, materials, and ordering your Mr Washline Foldaway.
               </p>
             </div>
           </section>
@@ -105,9 +105,9 @@ export default function FaqsPage() {
             ))}
 
             <div className="mt-16 p-8 rounded-3xl bg-zinc-900 text-white text-center space-y-4">
-              <h3 className="text-2xl font-bold">Have another question?</h3>
+              <h3 className="text-2xl font-bold">Need assistance?</h3>
               <p className="text-zinc-400 text-xs sm:text-sm max-w-md mx-auto">
-                Our factory team in Cape Town and Johannesburg is happy to assist you with custom advice.
+                Contact Mr Washline directly for guidance or quotation details.
               </p>
               <a
                 href={PRODUCT_DATA.contact.headOffice.whatsappLink}
@@ -116,7 +116,7 @@ export default function FaqsPage() {
                 className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold uppercase tracking-wider"
               >
                 <MessageSquare className="w-4 h-4" />
-                <span>Chat on WhatsApp: 082 378 2381</span>
+                <span>WhatsApp: 082 378 2381</span>
               </a>
             </div>
           </section>

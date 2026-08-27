@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { PRODUCT_DATA } from '@/data/productData';
-import { ShieldCheck, Check, MoveDown, Compass, Maximize } from 'lucide-react';
+import { Check } from 'lucide-react';
 
 export default function BenefitsGrid() {
   const benefits = PRODUCT_DATA.benefits;
@@ -14,13 +14,13 @@ export default function BenefitsGrid() {
         {/* Section Header */}
         <div className="max-w-3xl mb-16">
           <span className="text-xs font-bold tracking-widest uppercase text-zinc-500">
-            Engineering & Performance
+            Product Characteristics
           </span>
           <h2 className="mt-2 text-3xl sm:text-5xl font-extrabold tracking-tight text-zinc-950">
-            Engineered for Coastal & South African Conditions
+            Four key advantages of the Foldaway design.
           </h2>
-          <p className="mt-4 text-lg text-zinc-600">
-            Four core architectural advantages that make Mr Washline the leading foldaway choice since 2003.
+          <p className="mt-4 text-base sm:text-lg text-zinc-600">
+            Manufactured from aluminium with an epoxy powder-coated finish for long-term durability.
           </p>
         </div>
 
@@ -35,22 +35,21 @@ export default function BenefitsGrid() {
                   isEven ? 'lg:grid-flow-dense' : ''
                 }`}
               >
-                {/* Visual / Image */}
                 <div
                   className={`lg:col-span-6 ${
                     isEven ? 'lg:col-start-7' : ''
                   }`}
                 >
-                  <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-lg border border-zinc-200/80 bg-zinc-100 group">
+                  <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-lg border border-zinc-200/80 bg-zinc-100">
                     <Image
                       src={benefit.image}
                       alt={benefit.title}
                       fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/40 via-transparent to-transparent" />
                     
-                    {/* Badge */}
                     <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end">
                       <span className="px-3.5 py-1.5 rounded-full bg-zinc-900/90 text-white text-xs font-bold backdrop-blur-md">
                         {benefit.tagline}
@@ -59,7 +58,6 @@ export default function BenefitsGrid() {
                   </div>
                 </div>
 
-                {/* Text Content */}
                 <div
                   className={`lg:col-span-6 ${
                     isEven ? 'lg:col-start-1' : ''

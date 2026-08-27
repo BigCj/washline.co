@@ -4,11 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { 
   Package, 
-  Wrench, 
   ArrowRight, 
-  Sparkles, 
-  CheckCircle2, 
-  CircleDot,
   Hammer
 } from 'lucide-react';
 import { PRODUCT_DATA } from '@/data/productData';
@@ -25,7 +21,7 @@ export default function KitContentsExploded() {
         {/* Section Heading */}
         <div className="max-w-3xl">
           <span className="text-xs font-bold tracking-widest uppercase text-emerald-400">
-            Engineered For Easy Transportation
+            Transport & Assembly
           </span>
           <h2 className="mt-2 text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
             {kitInfo.title}
@@ -43,7 +39,7 @@ export default function KitContentsExploded() {
 
           <div className="mt-6 flex items-baseline gap-4">
             <span className="text-2xl sm:text-3xl font-extrabold text-white">
-              {PRODUCT_DATA.pricing.diyKitPriceRangeDisplay}
+              {PRODUCT_DATA.pricing.diyKitRangeDisplay}
             </span>
             <span className="text-xs text-zinc-400">
               (FROM R{PRODUCT_DATA.pricing.diyKitStartingPrice.toLocaleString()})
@@ -66,18 +62,17 @@ export default function KitContentsExploded() {
           <div className="flex flex-col lg:flex-row items-start justify-between gap-6 mb-8">
             <div>
               <span className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
-                Technical Diagram & Packaging Specs
+                Kit Contents
               </span>
               <h3 className="text-2xl font-bold text-white mt-1">
-                Seven Precision Components
+                Seven Supplied Components
               </h3>
             </div>
 
-            {/* Assembly Tool Callout */}
             <div className="inline-flex items-center gap-3 px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-xs text-zinc-300">
               <Hammer className="w-4 h-4 text-amber-400" />
               <span>
-                <strong>Tool required:</strong> Rubber mallet to connect side arms
+                <strong>Tool required:</strong> Rubber mallet to connect the arms to the front and back bars
               </span>
             </div>
           </div>
@@ -86,7 +81,6 @@ export default function KitContentsExploded() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Left Diagram / Visual Representation */}
             <div className="lg:col-span-7 bg-zinc-900/90 rounded-3xl p-6 sm:p-10 border border-zinc-800 relative overflow-hidden">
-              {/* Architectural Technical Blueprint Background Grid */}
               <div
                 className="absolute inset-0 opacity-15"
                 style={{
@@ -96,7 +90,6 @@ export default function KitContentsExploded() {
                 }}
               />
 
-              {/* Schematic Illustration */}
               <div className="relative aspect-[16/10] w-full flex flex-col justify-between z-10">
                 {/* Shipping Tube Callout Banner */}
                 <div className="flex items-center justify-between p-3.5 rounded-xl bg-zinc-950/80 border border-zinc-700 backdrop-blur-sm">
@@ -104,19 +97,16 @@ export default function KitContentsExploded() {
                     <Package className="w-5 h-5 text-emerald-400" />
                     <div>
                       <div className="text-xs font-bold text-white">
-                        Compact Shipping Tube
+                        Strong Cardboard Tube
                       </div>
                       <div className="text-[11px] text-zinc-400">
-                        {kitInfo.tubeSpecs} • High crush-strength cardboard
+                        {kitInfo.tubeSpecs} • Convenient for road or air transport
                       </div>
                     </div>
                   </div>
-                  <span className="text-[10px] font-mono uppercase px-2 py-1 bg-zinc-800 text-zinc-300 rounded">
-                    Road & Air Ready
-                  </span>
                 </div>
 
-                {/* Technical Graphic SVG Blueprint */}
+                {/* SVG Blueprint */}
                 <div className="my-auto py-6">
                   <svg
                     viewBox="0 0 700 320"
@@ -180,7 +170,7 @@ export default function KitContentsExploded() {
                       strokeLinecap="round"
                     />
 
-                    {/* Stay Arm Bracket pivots */}
+                    {/* Stays */}
                     <line
                       x1="60"
                       y1="160"
@@ -198,7 +188,7 @@ export default function KitContentsExploded() {
                       strokeWidth="3"
                     />
 
-                    {/* 7. Washing line cords (6 horizontal lines) */}
+                    {/* 7. Washing line cord */}
                     {[100, 120, 140, 160, 180, 200].map((yVal, i) => (
                       <line
                         key={i}
@@ -212,7 +202,7 @@ export default function KitContentsExploded() {
                       />
                     ))}
 
-                    {/* 6. Wing nut tensioner callout */}
+                    {/* 6. Wing nut line tensioner */}
                     <circle
                       cx="615"
                       cy="210"
@@ -222,17 +212,15 @@ export default function KitContentsExploded() {
                       strokeWidth="2"
                     />
 
-                    {/* 3, 4, 5. Wall fasteners at mounting back plate */}
+                    {/* 3, 4, 5. Wall fasteners */}
                     {[80, 260].map((yPos, i) => (
                       <g key={i}>
-                        {/* Coach screw */}
                         <circle
                           cx="60"
                           cy={yPos}
                           r="6"
                           fill={activePart === 3 ? '#34D399' : '#D4D4D8'}
                         />
-                        {/* Washer */}
                         <circle
                           cx="60"
                           cy={yPos}
@@ -268,7 +256,7 @@ export default function KitContentsExploded() {
             {/* Right List of 7 Exact Components */}
             <div className="lg:col-span-5 space-y-2.5">
               <div className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2">
-                Kit Inventory (Click to inspect)
+                Kit Inventory
               </div>
 
               {components.map((comp) => {
@@ -295,15 +283,10 @@ export default function KitContentsExploded() {
                     </span>
 
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-baseline justify-between">
-                        <span className="font-bold text-sm text-white truncate">
-                          {comp.name}
-                        </span>
-                        <span className="text-xs text-zinc-400 font-mono shrink-0 ml-2">
-                          {comp.quantity}
-                        </span>
+                      <div className="font-bold text-sm text-white truncate">
+                        {comp.name}
                       </div>
-                      <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
+                      <p className="text-xs text-zinc-400 mt-0.5">
                         {comp.description}
                       </p>
                     </div>

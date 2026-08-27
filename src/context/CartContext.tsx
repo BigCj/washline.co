@@ -9,7 +9,7 @@ export interface CartItem {
   color: FrameColor;
   isDiyKit: boolean;
   quantity: number;
-  unitPrice: number;
+  priceDisplay: string;
 }
 
 interface CartContextType {
@@ -23,7 +23,6 @@ interface CartContextType {
   updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
   totalItemsCount: number;
-  totalPrice: number;
   quoteWhatsappLink: string;
 }
 
@@ -33,7 +32,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  // Load from local storage
   useEffect(() => {
     try {
       const saved = localStorage.getItem('mrwashline_cart');
@@ -45,7 +43,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  // Save to local storage
   useEffect(() => {
     try {
       localStorage.setItem('mrwashline_cart', JSON.stringify(items));
@@ -59,8 +56,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const toggleCart = () => setIsOpen((prev) => !prev);
 
   const addItem = (size: ProductSize, color: FrameColor, isDiyKit: boolean, quantity = 1) => {
-    const unitPrice = isDiyKit ? size.diyPriceInclVat : size.assembledPriceInclVat;
-    const itemId = `${size.id}-${color.id}-${isDiyKit ? 'diy' : 'assembled'}`;
+    const itemId = `${size.id}-${color.id}-${isDiyKit ? 'diy' : 'standard'}`;
+    const priceDisplay = isDiyKit ? 'From R1,760 incl. VAT' : 'Quotation on request';
 
     setItems((prev) => {
       const existing = prev.find((item) => item.id === itemId);
@@ -79,7 +76,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           color,
           isDiyKit,
           quantity,
-          unitPrice,
+          priceDisplay,
         },
       ];
     });
@@ -104,19 +101,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const clearCart = () => setItems([]);
 
   const totalItemsCount = items.reduce((acc, item) => acc + item.quantity, 0);
-  const totalPrice = items.reduce((acc, item) => acc + item.unitPrice * item.quantity, 0);
 
-  // Build a formatted WhatsApp enquiry link
   const itemsText = items
     .map(
       (it) =>
         `• ${it.quantity}x The Foldaway ${it.size.nominalLength} (${it.color.name} - ${
-          it.isDiyKit ? 'DIY Tube Kit' : 'Standard Assembled'
-        }) @ R${it.unitPrice.toLocaleString()} each`
+          it.isDiyKit ? 'DIY Assemble Kit' : 'Standard Assembled'
+        })`
     )
     .join('%0A');
 
-  const whatsappMessage = `Hello Mr Washline,%0A%0AI would like to enquire / order the following:%0A${itemsText}%0A%0AEstimated Total: R${totalPrice.toLocaleString()} (incl. VAT)%0A%0APlease confirm stock and delivery/installation details.`;
+  const whatsappMessage = `Hello Mr Washline,%0A%0AI would like to request an order / quotation for the following:%0A${itemsText}%0A%0APlease confirm availability and delivery/installation details.`;
 
   const quoteWhatsappLink = `https://wa.me/27823782381?text=${whatsappMessage}`;
 
@@ -133,7 +128,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         updateQuantity,
         clearCart,
         totalItemsCount,
-        totalPrice,
         quoteWhatsappLink,
       }}
     >

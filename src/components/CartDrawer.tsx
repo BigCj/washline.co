@@ -11,8 +11,7 @@ import {
   ArrowRight, 
   MessageSquare, 
   ShieldCheck, 
-  Truck,
-  CheckCircle2
+  Truck
 } from 'lucide-react';
 import { PRODUCT_DATA } from '@/data/productData';
 
@@ -23,7 +22,6 @@ export default function CartDrawer() {
     closeCart, 
     removeItem, 
     updateQuantity, 
-    totalPrice, 
     quoteWhatsappLink,
     clearCart
   } = useCart();
@@ -32,13 +30,11 @@ export default function CartDrawer() {
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden">
-      {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-zinc-950/60 backdrop-blur-sm transition-opacity animate-in fade-in duration-200"
+        className="fixed inset-0 bg-zinc-950/60 backdrop-blur-sm transition-opacity"
         onClick={closeCart}
       />
 
-      {/* Drawer */}
       <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
         <div className="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between animate-in slide-in-from-right duration-300">
           {/* Header */}
@@ -48,9 +44,9 @@ export default function CartDrawer() {
                 <ShoppingBag className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-bold text-lg text-zinc-950">Your Basket</h3>
+                <h3 className="font-bold text-lg text-zinc-950">Your Basket / Quote</h3>
                 <p className="text-xs text-zinc-500">
-                  {items.length} {items.length === 1 ? 'configuration' : 'configurations'}
+                  {items.length} {items.length === 1 ? 'item' : 'items'}
                 </p>
               </div>
             </div>
@@ -73,7 +69,7 @@ export default function CartDrawer() {
                 </div>
                 <h4 className="font-bold text-zinc-900 text-base">Your basket is empty</h4>
                 <p className="text-xs text-zinc-500 mt-1 max-w-xs mx-auto">
-                  Configure your Foldaway size and frame colour to begin your order.
+                  Choose your Foldaway size and format to begin.
                 </p>
                 <button
                   type="button"
@@ -96,6 +92,7 @@ export default function CartDrawer() {
                       alt={item.size.label}
                       fill
                       className="object-cover"
+                      sizes="64px"
                     />
                   </div>
 
@@ -116,7 +113,7 @@ export default function CartDrawer() {
 
                     <div className="text-xs text-zinc-500 mt-0.5">
                       {item.color.name} Frame •{' '}
-                      {item.isDiyKit ? 'DIY Tube Kit' : 'Fully Assembled'}
+                      {item.isDiyKit ? 'DIY Assemble Kit' : 'Standard Assembled'}
                     </div>
 
                     <div className="flex items-center justify-between mt-3">
@@ -140,8 +137,8 @@ export default function CartDrawer() {
                         </button>
                       </div>
 
-                      <div className="font-extrabold text-sm text-zinc-950">
-                        R{(item.unitPrice * item.quantity).toLocaleString()}
+                      <div className="font-bold text-xs text-zinc-900">
+                        {item.priceDisplay}
                       </div>
                     </div>
                   </div>
@@ -153,24 +150,8 @@ export default function CartDrawer() {
           {/* Footer & Checkout CTAs */}
           {items.length > 0 && (
             <div className="p-6 bg-zinc-50 border-t border-zinc-200 space-y-4">
-              <div className="space-y-1.5 text-xs text-zinc-600">
-                <div className="flex justify-between">
-                  <span>Subtotal (incl. 15% VAT)</span>
-                  <span className="font-bold text-zinc-950">
-                    R{totalPrice.toLocaleString()}
-                  </span>
-                </div>
-                <div className="flex justify-between text-zinc-500">
-                  <span>Delivery fee</span>
-                  <span>Calculated on dispatch zone</span>
-                </div>
-              </div>
-
-              <div className="pt-2 border-t border-zinc-200 flex justify-between items-baseline">
-                <span className="font-bold text-sm text-zinc-950">Total Est.</span>
-                <span className="text-2xl font-extrabold text-zinc-950">
-                  R{totalPrice.toLocaleString()}
-                </span>
+              <div className="p-3 rounded-xl bg-white border border-zinc-200 text-xs text-zinc-600">
+                <span>Delivery charges or free-delivery eligibility are confirmed during checkout or quotation.</span>
               </div>
 
               {/* Direct WhatsApp Order Link */}
@@ -181,7 +162,7 @@ export default function CartDrawer() {
                 className="w-full py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-sm flex items-center justify-center gap-2"
               >
                 <MessageSquare className="w-4 h-4" />
-                <span>Order via Direct WhatsApp</span>
+                <span>Enquire / Order via WhatsApp</span>
               </a>
 
               {/* Or standard inquiry checkout */}
@@ -190,12 +171,12 @@ export default function CartDrawer() {
                 onClick={closeCart}
                 className="w-full py-3 px-4 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2"
               >
-                <span>Request Formal Invoice / Quotation</span>
+                <span>Request Quotation</span>
               </Link>
 
               <div className="flex items-center justify-center gap-2 text-[11px] text-zinc-500 pt-1">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                <span>100% Satisfaction Guarantee</span>
+                <span>100% Satisfaction / Money-Back Guarantee</span>
               </div>
             </div>
           )}
