@@ -67,7 +67,7 @@ export const PRODUCT_DATA = {
       name: 'White',
       hex: '#F4F4F5',
       description: 'White epoxy powder-coated finish.',
-      image: '/images/products/01-open-charcoal.webp',
+      image: '/images/products/09-white-frame.webp',
     },
     {
       id: 'bronze',
@@ -231,7 +231,7 @@ export const PRODUCT_DATA = {
         'Space-saving fold-down design',
         'Clean wall-mounted profile',
       ],
-      image: '/images/products/04-folded-charcoal.webp',
+      image: '/images/products/white-poolside-folded.webp',
     },
     {
       id: 'versatile',
@@ -246,7 +246,7 @@ export const PRODUCT_DATA = {
         'Laundry rooms',
         'Garages',
       ],
-      image: '/images/products/01-open-charcoal.webp',
+      image: '/images/products/09-white-frame.webp',
     },
   ],
 
