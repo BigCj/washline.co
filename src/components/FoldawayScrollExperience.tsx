@@ -1,9 +1,18 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowDown, ChevronRight } from 'lucide-react';
+import { 
+  Play, 
+  Pause, 
+  ChevronRight, 
+  Sparkles, 
+  MousePointer, 
+  SlidersHorizontal,
+  Maximize2,
+  Minimize2
+} from 'lucide-react';
 
 const FRAMES = [
   '/images/washline/frame-01-open.webp',
@@ -15,21 +24,15 @@ const FRAMES = [
 ];
 
 export default function FoldawayScrollExperience() {
-  const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
   const imagesRef = useRef<HTMLImageElement[]>([]);
+  const animFrameRef = useRef<number | null>(null);
 
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setReducedMotion(mediaQuery.matches);
-    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
-    mediaQuery.addEventListener('change', handler);
-    return () => mediaQuery.removeEventListener('change', handler);
-  }, []);
-
+  // Preload all 6 frames immediately
   useEffect(() => {
     let loadedCount = 0;
     const loadedImages: HTMLImageElement[] = [];
@@ -49,7 +52,7 @@ export default function FoldawayScrollExperience() {
     });
   }, []);
 
-  const renderFrameToCanvas = (fraction: number) => {
+  const renderFrameToCanvas = useCallback((fraction: number) => {
     const canvas = canvasRef.current;
     if (!canvas || imagesRef.current.length < FRAMES.length) return;
     const ctx = canvas.getContext('2d');
@@ -80,198 +83,225 @@ export default function FoldawayScrollExperience() {
       ctx.drawImage(img2, 0, 0, canvas.width, canvas.height);
     }
     ctx.globalAlpha = 1;
-  };
+  }, []);
 
+  // Update canvas on progress state change
   useEffect(() => {
-    if (reducedMotion) return;
+    if (imagesLoaded) {
+      renderFrameToCanvas(progress);
+    }
+  }, [progress, imagesLoaded, renderFrameToCanvas]);
 
-    const handleScroll = () => {
-      const container = containerRef.current;
-      if (!container) return;
+  // Auto-play loop toggle
+  useEffect(() => {
+    if (!isPlaying) {
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+      return;
+    }
 
-      const rect = container.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      const totalScrollableDistance = rect.height - windowHeight;
+    let direction = 1;
+    let lastTime = performance.now();
 
-      if (totalScrollableDistance <= 0) return;
+    const animate = (currentTime: number) => {
+      const delta = (currentTime - lastTime) / 1000;
+      lastTime = currentTime;
 
-      const scrolledPastTop = -rect.top;
-      const rawProgress = Math.max(
-        0,
-        Math.min(1, scrolledPastTop / totalScrollableDistance)
-      );
+      setProgress((prev) => {
+        let next = prev + direction * (delta * 0.45);
+        if (next >= 1) {
+          next = 1;
+          direction = -1;
+        } else if (next <= 0) {
+          next = 0;
+          direction = 1;
+        }
+        return next;
+      });
 
-      setProgress(rawProgress);
-      if (imagesLoaded) {
-        requestAnimationFrame(() => renderFrameToCanvas(rawProgress));
-      }
+      animFrameRef.current = requestAnimationFrame(animate);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
+    animFrameRef.current = requestAnimationFrame(animate);
 
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [imagesLoaded, reducedMotion]);
+    return () => {
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+    };
+  }, [isPlaying]);
 
-  const getActiveTextIndex = (p: number) => {
-    if (p < 0.35) return 0;
-    if (p < 0.7) return 1;
-    return 2;
+  // Mouse hover scrubbing on desktop (move cursor across container to fold/unfold)
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isPlaying) return; // let auto-play run if active
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const fraction = Math.max(0, Math.min(1, x / rect.width));
+    setProgress(fraction);
   };
 
-  const activeTextIdx = getActiveTextIndex(progress);
+  const stages = [
+    { label: 'Fully Open', value: 0, desc: 'Horizontal position for drying clothes' },
+    { label: 'Mid-Fold', value: 0.5, desc: 'Stay arms release to lower the frame' },
+    { label: 'Folded Flat', value: 1, desc: 'Rests almost flush against mounting wall' },
+  ];
 
   return (
     <section
       id="how-it-works"
       ref={containerRef}
-      className={`relative bg-zinc-950 text-white ${
-        reducedMotion ? 'py-20 min-h-auto' : 'h-[220vh] sm:h-[260vh]'
-      }`}
+      className="py-20 sm:py-28 bg-zinc-950 text-white border-b border-zinc-900 overflow-hidden"
     >
-      <div
-        className={`${
-          reducedMotion
-            ? 'relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'
-            : 'sticky top-0 h-screen w-full flex flex-col justify-between overflow-hidden'
-        }`}
-      >
-        {/* Top Product Specs Indicator */}
-        <div className="pt-6 sm:pt-10 px-4 sm:px-8 max-w-7xl mx-auto w-full z-20 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-xs font-medium tracking-wider text-zinc-300 border border-white/10">
-              The Foldaway Washing Line
-            </span>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-bold uppercase tracking-wider text-emerald-400 mb-3 border border-white/10">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Space-Saving Fold-Down Action</span>
+            </div>
+            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+              Space when you need it. Gone when you don’t.
+            </h2>
+            <p className="mt-3 text-sm sm:text-base text-zinc-400 leading-relaxed">
+              Hover your mouse or use the slider below to see how smoothly the Foldaway frame raises for laundry and folds flat against the wall.
+            </p>
           </div>
 
-          <div className="hidden sm:flex items-center gap-3 text-xs text-zinc-400">
-            <span>Aluminium</span>
-            <span>•</span>
-            <span>Epoxy Powder-Coated</span>
-            <span>•</span>
-            <span>Stainless Steel Screws</span>
+          {/* Quick interactive controls */}
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setIsPlaying(!isPlaying)}
+              className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border ${
+                isPlaying
+                  ? 'bg-emerald-500 text-zinc-950 border-emerald-400 shadow-md'
+                  : 'bg-zinc-900 hover:bg-zinc-800 text-white border-zinc-700'
+              }`}
+            >
+              {isPlaying ? (
+                <>
+                  <Pause className="w-3.5 h-3.5" />
+                  <span>Pause Loop</span>
+                </>
+              ) : (
+                <>
+                  <Play className="w-3.5 h-3.5" />
+                  <span>Auto-Play Action</span>
+                </>
+              )}
+            </button>
+
+            <Link
+              href="/#order"
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white text-zinc-950 text-xs font-bold uppercase tracking-wider hover:bg-zinc-200 transition-colors"
+            >
+              <span>Order Now</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
         </div>
 
-        {/* Central Visual & Canvas Render */}
-        <div className="relative flex-1 flex items-center justify-center p-4 sm:p-6 w-full max-w-6xl mx-auto z-10">
-          {!reducedMotion ? (
-            <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] max-h-[72vh] rounded-2xl overflow-hidden shadow-2xl bg-zinc-900 border border-zinc-800">
-              <canvas
-                ref={canvasRef}
-                className="w-full h-full object-cover"
-                style={{ filter: 'brightness(1.02) contrast(1.02)' }}
-              />
+        {/* Interactive Visual Canvas Container */}
+        <div className="relative max-w-5xl mx-auto">
+          {/* Main Visual Display */}
+          <div
+            onMouseMove={handleMouseMove}
+            className="group relative aspect-[16/10] sm:aspect-[16/9] w-full rounded-3xl overflow-hidden shadow-2xl bg-zinc-900 border border-zinc-800 cursor-ew-resize select-none"
+          >
+            <canvas
+              ref={canvasRef}
+              className="w-full h-full object-cover pointer-events-none"
+              style={{ filter: 'brightness(1.02) contrast(1.02)' }}
+            />
 
-              {/* Minimal Text Overlay fixed height container to avoid layout shift */}
-              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent flex flex-col justify-end p-6 sm:p-10 pointer-events-none">
-                <div className="max-w-xl min-h-[110px] flex flex-col justify-end">
-                  {activeTextIdx === 0 && (
-                    <div className="transition-opacity duration-300">
-                      <h3 className="text-2xl sm:text-4xl font-bold tracking-tight text-white">
-                        Open when you need it.
-                      </h3>
-                      <p className="text-sm sm:text-base text-zinc-300 mt-2">
-                        Supported horizontally for active drying.
-                      </p>
-                    </div>
-                  )}
-
-                  {activeTextIdx === 1 && (
-                    <div className="transition-opacity duration-300">
-                      <h3 className="text-2xl sm:text-4xl font-bold tracking-tight text-white">
-                        Designed to disappear.
-                      </h3>
-                      <p className="text-sm sm:text-base text-zinc-300 mt-2">
-                        Stay arms release to lower the frame smoothly toward the wall.
-                      </p>
-                    </div>
-                  )}
-
-                  {activeTextIdx === 2 && (
-                    <div className="transition-opacity duration-300">
-                      <h3 className="text-2xl sm:text-4xl font-bold tracking-tight text-white">
-                        Fold it away when you don’t.
-                      </h3>
-                      <p className="text-sm sm:text-base text-zinc-300 mt-2">
-                        More space. Same wall. Rests almost flat against the mounting wall.
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </div>
+            {/* Subtle interactive hover cue on desktop */}
+            <div className="absolute top-4 right-4 hidden md:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-zinc-950/80 backdrop-blur-md border border-zinc-700 text-[11px] text-zinc-300 pointer-events-none transition-opacity group-hover:opacity-100 opacity-70">
+              <MousePointer className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Hover cursor across frame to fold/unfold</span>
             </div>
-          ) : (
-            <div className="w-full py-12">
-              <div className="text-center mb-10">
-                <h2 className="text-3xl font-bold">The Foldaway Design</h2>
-                <p className="text-zinc-400 text-sm mt-2">
-                  Space when you need it. Gone when you don’t.
+
+            {/* Bottom State Caption Overlay */}
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-zinc-950/90 via-zinc-950/50 to-transparent p-6 sm:p-8 flex flex-col justify-end pointer-events-none">
+              <div className="max-w-xl">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-emerald-400">
+                  {progress < 0.35 ? 'State 01: Open' : progress < 0.7 ? 'State 02: Mid-Fold' : 'State 03: Folded Flat'}
+                </span>
+                <h3 className="text-xl sm:text-3xl font-extrabold text-white mt-1">
+                  {progress < 0.35
+                    ? 'Open when you need it.'
+                    : progress < 0.7
+                    ? 'Designed to disappear.'
+                    : 'Fold it away when you don’t.'}
+                </h3>
+                <p className="text-xs sm:text-sm text-zinc-300 mt-1">
+                  {progress < 0.35
+                    ? 'Supported horizontally by sturdy stay arms for active drying.'
+                    : progress < 0.7
+                    ? 'Support stays release to lower the frame effortlessly.'
+                    : 'Rests flat against the wall, restoring your patio, courtyard or garage space.'}
                 </p>
               </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="bg-zinc-900 rounded-2xl p-6 border border-zinc-800">
-                  <div className="relative aspect-[3/2] rounded-xl overflow-hidden mb-4">
-                    <Image
-                      src="/images/washline/frame-01-open.webp"
-                      alt="The Foldaway washing line fully raised and open"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <h4 className="text-xl font-bold text-white">
-                    Open when you need it
-                  </h4>
-                  <p className="text-zinc-400 text-sm mt-2">
-                    Horizontal position for hanging laundry.
-                  </p>
-                </div>
-
-                <div className="bg-zinc-900 rounded-2xl p-6 border border-zinc-800">
-                  <div className="relative aspect-[3/2] rounded-xl overflow-hidden mb-4">
-                    <Image
-                      src="/images/washline/frame-06-closed.webp"
-                      alt="The Foldaway washing line folded flat against the wall"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <h4 className="text-xl font-bold text-white">
-                    Fold it away when you don’t
-                  </h4>
-                  <p className="text-zinc-400 text-sm mt-2">
-                    Folds flat against the wall to allow the area to be reused.
-                  </p>
-                </div>
-              </div>
             </div>
-          )}
-        </div>
-
-        {/* Bottom Control & CTA Bar */}
-        <div className="pb-6 sm:pb-8 px-4 sm:px-8 max-w-7xl mx-auto w-full z-20 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3 text-zinc-400 text-xs">
-            <span className="inline-flex p-1.5 rounded-full bg-white/10 text-white animate-bounce">
-              <ArrowDown className="w-3.5 h-3.5" />
-            </span>
-            <span>Scroll down to fold • Scroll up to open</span>
           </div>
 
-          <div className="w-full sm:w-64 bg-zinc-800 h-1.5 rounded-full overflow-hidden">
-            <div
-              className="bg-white h-full transition-all duration-75"
-              style={{ width: `${Math.round(progress * 100)}%` }}
-            />
-          </div>
+          {/* Interactive Scrub Bar & State Preset Buttons */}
+          <div className="mt-8 bg-zinc-900/90 p-5 sm:p-6 rounded-2xl border border-zinc-800 space-y-5">
+            {/* Range Slider for direct control (Touch & Mobile friendly) */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-xs text-zinc-400">
+                <span className="flex items-center gap-1.5 font-medium text-zinc-300">
+                  <SlidersHorizontal className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Interactive Position Scrubber</span>
+                </span>
+                <span className="font-mono text-zinc-400">
+                  {Math.round((1 - progress) * 100)}% Open • {Math.round(progress * 100)}% Folded
+                </span>
+              </div>
 
-          <Link
-            href="/#order"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-zinc-950 text-xs font-bold uppercase tracking-wider hover:bg-zinc-200 transition-colors shadow-sm"
-          >
-            <span>Explore The Foldaway</span>
-            <ChevronRight className="w-3.5 h-3.5" />
-          </Link>
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value={progress}
+                onChange={(e) => {
+                  setIsPlaying(false);
+                  setProgress(parseFloat(e.target.value));
+                }}
+                className="w-full h-2.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-emerald-400 focus:outline-none"
+                aria-label="Foldaway position slider"
+              />
+            </div>
+
+            {/* 3 Step Preset Buttons */}
+            <div className="grid grid-cols-3 gap-2.5 sm:gap-4 pt-1 border-t border-zinc-800/80">
+              {stages.map((stage) => {
+                const isActive = Math.abs(progress - stage.value) < 0.2;
+                return (
+                  <button
+                    key={stage.label}
+                    type="button"
+                    onClick={() => {
+                      setIsPlaying(false);
+                      setProgress(stage.value);
+                    }}
+                    className={`p-3 rounded-xl text-left border transition-all ${
+                      isActive
+                        ? 'bg-zinc-800 border-emerald-400/80 ring-1 ring-emerald-400/50 text-white'
+                        : 'bg-zinc-950/60 border-zinc-800 text-zinc-400 hover:bg-zinc-800/60 hover:text-zinc-200'
+                    }`}
+                  >
+                    <div className="text-xs sm:text-sm font-bold flex items-center justify-between">
+                      <span>{stage.label}</span>
+                      {stage.value === 0 && <Maximize2 className="w-3 h-3 text-zinc-400" />}
+                      {stage.value === 1 && <Minimize2 className="w-3 h-3 text-zinc-400" />}
+                    </div>
+                    <div className="hidden sm:block text-[11px] text-zinc-400 mt-1 truncate">
+                      {stage.desc}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </section>
