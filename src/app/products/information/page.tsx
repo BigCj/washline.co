@@ -6,9 +6,9 @@ import Link from 'next/link';
 import { ShieldCheck, Ruler, Check, Package, FileText, ArrowRight } from 'lucide-react';
 
 export const metadata = {
-  title: 'Product Information & Specifications | Mr Washline',
+  title: 'Product Information & Specifications | The Washline Co.',
   description:
-    'Factual information, specifications, materials, warranty policy, and dimensions for Mr Washline foldaway washing lines.',
+    'Factual information, specifications, materials, warranty policy, and dimensions for The Washline Co. foldaway washing lines.',
 };
 
 export default function ProductInformationPage() {
@@ -106,7 +106,7 @@ export default function ProductInformationPage() {
               Satisfaction Guarantee
             </h2>
             <p className="text-zinc-300 text-sm sm:text-base leading-relaxed max-w-3xl">
-              Mr Washline offers a 100% satisfaction / money-back guarantee in the event that the customer is not satisfied with the product or service.
+              The Washline Co. offers a 100% satisfaction / money-back guarantee in the event that the customer is not satisfied with the product or service.
             </p>
           </div>
         </section>

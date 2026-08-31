@@ -4,12 +4,10 @@ import React, { useState } from 'react';
 import { 
   Phone, 
   Mail, 
-  MapPin, 
-  MessageSquare, 
   Send, 
   CheckCircle2, 
   Clock,
-  Sparkles
+  MessageSquare
 } from 'lucide-react';
 import { PRODUCT_DATA } from '@/data/productData';
 
@@ -44,59 +42,42 @@ export default function ContactSection() {
             Need help choosing the right Foldaway?
           </h2>
           <p className="mt-4 text-base sm:text-lg text-zinc-600">
-            Contact our factory directly for sizing guidance, custom quotation, or delivery queries.
+            Contact The Washline Co. directly for sizing guidance, quotation, or delivery queries.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* Left Column: Contact Cards */}
           <div className="lg:col-span-5 space-y-6">
-            {/* Cape Town Head Office Card */}
+            {/* The Washline Co. Card */}
             <div className="p-8 rounded-3xl bg-zinc-950 text-white shadow-xl space-y-6">
               <div>
                 <div className="text-xs font-mono text-emerald-400 font-bold uppercase tracking-wider">
-                  Head Office & Manufacturing
+                  Customer Enquiries & Orders
                 </div>
                 <h3 className="text-2xl font-bold text-white mt-1">
-                  {contact.headOffice.companyName}
+                  {contact.companyName}
                 </h3>
               </div>
 
               <div className="space-y-4 text-xs sm:text-sm text-zinc-300">
-                <div className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-                  <span>{contact.headOffice.addressFormatted}</span>
+                <div className="flex items-center gap-3">
+                  <Phone className="w-5 h-5 text-emerald-400 shrink-0" />
+                  <a
+                    href={`tel:${contact.telIntl}`}
+                    className="hover:text-white transition-colors font-medium text-base text-white"
+                  >
+                    {contact.tel} ({contact.telIntl})
+                  </a>
                 </div>
 
                 <div className="flex items-center gap-3">
                   <Mail className="w-5 h-5 text-emerald-400 shrink-0" />
                   <a
-                    href={`mailto:${contact.headOffice.email}`}
+                    href={`mailto:${contact.email}`}
                     className="hover:text-white underline transition-colors"
                   >
-                    {contact.headOffice.email}
-                  </a>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <Phone className="w-5 h-5 text-emerald-400 shrink-0" />
-                  <a
-                    href={`tel:${contact.headOffice.telIntl}`}
-                    className="hover:text-white transition-colors"
-                  >
-                    {contact.headOffice.telIntl} ({contact.headOffice.tel})
-                  </a>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <MessageSquare className="w-5 h-5 text-emerald-400 shrink-0" />
-                  <a
-                    href={contact.headOffice.whatsappLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-emerald-400 font-bold underline transition-colors"
-                  >
-                    WhatsApp: {contact.headOffice.cellWhatsappIntl}
+                    {contact.email}
                   </a>
                 </div>
               </div>
@@ -104,46 +85,6 @@ export default function ContactSection() {
               <div className="pt-4 border-t border-zinc-800 flex items-center gap-2 text-xs text-zinc-400">
                 <Clock className="w-4 h-4 text-zinc-500" />
                 <span>Mon – Fri: 08:00 – 16:30</span>
-              </div>
-            </div>
-
-            {/* Johannesburg Installations Card */}
-            <div className="p-6 rounded-3xl bg-zinc-50 border border-zinc-200 shadow-sm space-y-4">
-              <div className="text-xs font-bold uppercase tracking-wider text-zinc-500">
-                Gauteng Branch
-              </div>
-              <h4 className="text-lg font-bold text-zinc-950">
-                {contact.johannesburg.label}
-              </h4>
-
-              <div className="space-y-2 text-xs sm:text-sm text-zinc-700">
-                <div>
-                  Tel:{' '}
-                  <a
-                    href={`tel:${contact.johannesburg.telIntl}`}
-                    className="font-semibold text-zinc-950 hover:underline"
-                  >
-                    {contact.johannesburg.telIntl}
-                  </a>
-                </div>
-                <div>
-                  Cell:{' '}
-                  <a
-                    href={`tel:${contact.johannesburg.cellIntl}`}
-                    className="font-semibold text-zinc-950 hover:underline"
-                  >
-                    {contact.johannesburg.cellIntl}
-                  </a>
-                </div>
-                <div>
-                  Email:{' '}
-                  <a
-                    href={`mailto:${contact.johannesburg.email}`}
-                    className="font-semibold text-zinc-950 hover:underline"
-                  >
-                    {contact.johannesburg.email}
-                  </a>
-                </div>
               </div>
             </div>
           </div>
@@ -213,12 +154,12 @@ export default function ContactSection() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-bold uppercase text-zinc-700 mb-1">
-                      Contact Phone / WhatsApp *
+                      Contact Phone *
                     </label>
                     <input
                       type="tel"
                       required
-                      placeholder="e.g. 082 123 4567"
+                      placeholder="e.g. 012 004 8109"
                       value={formData.phone}
                       onChange={(e) =>
                         setFormData({ ...formData, phone: e.target.value })
@@ -234,7 +175,7 @@ export default function ContactSection() {
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Sea Point, 8005"
+                      placeholder="e.g. Pretoria, 0001"
                       value={formData.areaPostalCode}
                       onChange={(e) =>
                         setFormData({
@@ -262,7 +203,6 @@ export default function ContactSection() {
                       <option>The Foldaway DIY Assemble Kit</option>
                       <option>The Foldaway Washline (Fully Assembled)</option>
                       <option>The Foldaway Table</option>
-                      <option>Installation Service / Custom</option>
                     </select>
                   </div>
 
@@ -292,7 +232,7 @@ export default function ContactSection() {
                   </label>
                   <textarea
                     rows={4}
-                    placeholder="Tell us about your wall type (brick, plaster, vibracrete), special requirements, or questions..."
+                    placeholder="Tell us about your requirements or questions..."
                     value={formData.message}
                     onChange={(e) =>
                       setFormData({ ...formData, message: e.target.value })

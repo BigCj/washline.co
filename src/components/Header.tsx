@@ -13,7 +13,8 @@ import {
   MapPin, 
   ArrowRight,
   Sparkles,
-  Truck
+  Truck,
+  Mail
 } from 'lucide-react';
 import { PRODUCT_DATA } from '@/data/productData';
 
@@ -21,7 +22,6 @@ export default function Header() {
   const { totalItemsCount, openCart } = useCart();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productsDropdown, setProductsDropdown] = useState(false);
-  const [pricesDropdown, setPricesDropdown] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function Header() {
 
   return (
     <>
-      {/* Top micro-announcement bar */}
+      {/* Top announcement bar */}
       <div className="bg-zinc-950 text-zinc-300 text-xs py-2 px-4 border-b border-zinc-800/80 tracking-wide">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
           <div className="flex items-center gap-3">
@@ -50,27 +50,19 @@ export default function Header() {
 
           <div className="flex items-center gap-4 text-zinc-300">
             <a
-              href={`tel:${PRODUCT_DATA.contact.headOffice.telIntl}`}
-              className="hover:text-white transition-colors flex items-center gap-1"
+              href={`tel:${PRODUCT_DATA.contact.telIntl}`}
+              className="hover:text-white transition-colors flex items-center gap-1 font-medium"
             >
               <Phone className="w-3 h-3 text-zinc-400" />
-              <span>CT: 021 706 3651</span>
+              <span>Tel: {PRODUCT_DATA.contact.tel}</span>
             </a>
-            <span className="text-zinc-700">/</span>
+            <span className="text-zinc-700">|</span>
             <a
-              href={`tel:${PRODUCT_DATA.contact.johannesburg.telIntl}`}
+              href={`mailto:${PRODUCT_DATA.contact.email}`}
               className="hover:text-white transition-colors flex items-center gap-1"
             >
-              <span>JHB: 011 486 2824</span>
-            </a>
-            <span className="hidden sm:inline text-zinc-700">/</span>
-            <a
-              href={PRODUCT_DATA.contact.headOffice.whatsappLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden sm:inline hover:text-emerald-400 transition-colors font-medium text-zinc-200"
-            >
-              WhatsApp: 082 378 2381
+              <Mail className="w-3 h-3 text-zinc-400" />
+              <span>{PRODUCT_DATA.contact.email}</span>
             </a>
           </div>
         </div>
@@ -80,14 +72,14 @@ export default function Header() {
       <header
         className={`sticky top-0 z-40 transition-all duration-300 ${
           scrolled
-            ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-zinc-200/80 py-3'
-            : 'bg-white/90 backdrop-blur-sm border-b border-zinc-200/60 py-4'
+            ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-zinc-200/80 py-2.5'
+            : 'bg-white/90 backdrop-blur-sm border-b border-zinc-200/60 py-3.5'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center group">
-            <Logo variant="dark" height={44} className="transition-transform duration-200 group-hover:scale-[1.02]" />
+            <Logo variant="dark" height={52} className="transition-transform duration-200 group-hover:scale-[1.02]" />
           </Link>
 
           {/* Desktop Navigation Links */}
@@ -196,72 +188,13 @@ export default function Header() {
               Services & Installation
             </Link>
 
-            {/* Prices Dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => setPricesDropdown(true)}
-              onMouseLeave={() => setPricesDropdown(false)}
+            {/* Prices */}
+            <Link
+              href="/prices"
+              className="px-3.5 py-2 rounded-lg hover:text-zinc-950 hover:bg-zinc-50 transition-colors"
             >
-              <button
-                type="button"
-                className={`px-3.5 py-2 rounded-lg inline-flex items-center gap-1.5 transition-colors ${
-                  pricesDropdown
-                    ? 'text-zinc-950 bg-zinc-100'
-                    : 'hover:text-zinc-950 hover:bg-zinc-50'
-                }`}
-                onClick={() => setPricesDropdown(!pricesDropdown)}
-              >
-                <span>Prices</span>
-                <ChevronDown
-                  className={`w-4 h-4 transition-transform duration-200 ${
-                    pricesDropdown ? 'rotate-180 text-zinc-900' : 'text-zinc-400'
-                  }`}
-                />
-              </button>
-
-              {pricesDropdown && (
-                <div className="absolute top-full left-0 w-72 bg-white rounded-xl shadow-xl border border-zinc-200/80 p-2 mt-1 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                  <Link
-                    href="/prices#cape-town"
-                    className="block p-2.5 rounded-lg hover:bg-zinc-50 transition-colors"
-                    onClick={() => setPricesDropdown(false)}
-                  >
-                    <div className="text-zinc-900 font-semibold text-sm">
-                      Cape Town
-                    </div>
-                    <div className="text-zinc-500 text-xs">
-                      Factory pricing & weekly free delivery zones.
-                    </div>
-                  </Link>
-
-                  <Link
-                    href="/prices#johannesburg"
-                    className="block p-2.5 rounded-lg hover:bg-zinc-50 transition-colors"
-                    onClick={() => setPricesDropdown(false)}
-                  >
-                    <div className="text-zinc-900 font-semibold text-sm">
-                      Johannesburg – Installations
-                    </div>
-                    <div className="text-zinc-500 text-xs">
-                      Dedicated Gauteng supply & fit service.
-                    </div>
-                  </Link>
-
-                  <Link
-                    href="/prices#nationwide"
-                    className="block p-2.5 rounded-lg hover:bg-zinc-50 transition-colors"
-                    onClick={() => setPricesDropdown(false)}
-                  >
-                    <div className="text-zinc-900 font-semibold text-sm">
-                      Nationwide – All Other Areas
-                    </div>
-                    <div className="text-zinc-500 text-xs">
-                      DIY tube kit courier across South Africa.
-                    </div>
-                  </Link>
-                </div>
-              )}
-            </div>
+              Prices
+            </Link>
 
             {/* FAQ's */}
             <Link
@@ -306,15 +239,15 @@ export default function Header() {
               )}
             </button>
 
-            {/* Prominent BUY NOW CTA */}
+            {/* BUY NOW CTA */}
             <Link
               href="/#order"
-              className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-bold uppercase tracking-wider transition-all shadow-sm hover:shadow active:scale-[0.98]"
+              className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-bold uppercase tracking-wider transition-all shadow-sm active:scale-[0.98]"
             >
               BUY NOW
             </Link>
 
-            {/* Mobile menu hamburger button */}
+            {/* Mobile menu button */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -331,7 +264,7 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Mobile Slide-Out Navigation Drawer */}
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div
@@ -342,7 +275,7 @@ export default function Header() {
           <div className="fixed inset-y-0 right-0 w-full max-w-sm bg-white shadow-2xl flex flex-col justify-between overflow-y-auto animate-in slide-in-from-right duration-300">
             <div className="p-6">
               <div className="flex items-center justify-between pb-6 border-b border-zinc-100">
-                <Logo variant="dark" height={36} />
+                <Logo variant="dark" height={44} />
                 <button
                   type="button"
                   onClick={() => setMobileMenuOpen(false)}
@@ -389,35 +322,6 @@ export default function Header() {
                   </div>
                 </div>
 
-                <div className="border-t border-zinc-100 pt-4">
-                  <div className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2">
-                    Prices & Delivery
-                  </div>
-                  <div className="space-y-1">
-                    <Link
-                      href="/prices#cape-town"
-                      className="block px-3 py-2 text-base font-semibold text-zinc-900 rounded-lg hover:bg-zinc-50"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      Cape Town Pricing & Zones
-                    </Link>
-                    <Link
-                      href="/prices#johannesburg"
-                      className="block px-3 py-2 text-base font-semibold text-zinc-900 rounded-lg hover:bg-zinc-50"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      Johannesburg Installations
-                    </Link>
-                    <Link
-                      href="/prices#nationwide"
-                      className="block px-3 py-2 text-base font-semibold text-zinc-900 rounded-lg hover:bg-zinc-50"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      Nationwide Delivery
-                    </Link>
-                  </div>
-                </div>
-
                 <div className="border-t border-zinc-100 pt-4 space-y-1">
                   <Link
                     href="/installation"
@@ -425,6 +329,13 @@ export default function Header() {
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Services & Installation
+                  </Link>
+                  <Link
+                    href="/prices"
+                    className="block px-3 py-2 text-base font-semibold text-zinc-900 rounded-lg hover:bg-zinc-50"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Prices & Delivery
                   </Link>
                   <Link
                     href="/faqs"
@@ -459,14 +370,25 @@ export default function Header() {
               >
                 BUY NOW — FROM R1,760
               </Link>
-              <div className="mt-4 text-center text-xs text-zinc-500">
-                Direct WhatsApp:{' '}
-                <a
-                  href={PRODUCT_DATA.contact.headOffice.whatsappLink}
-                  className="font-semibold text-zinc-900 underline"
-                >
-                  082 378 2381
-                </a>
+              <div className="mt-4 text-center text-xs text-zinc-500 space-y-1">
+                <div>
+                  Tel:{' '}
+                  <a
+                    href={`tel:${PRODUCT_DATA.contact.telIntl}`}
+                    className="font-semibold text-zinc-900 underline"
+                  >
+                    {PRODUCT_DATA.contact.tel}
+                  </a>
+                </div>
+                <div>
+                  Email:{' '}
+                  <a
+                    href={`mailto:${PRODUCT_DATA.contact.email}`}
+                    className="font-semibold text-zinc-900 underline"
+                  >
+                    {PRODUCT_DATA.contact.email}
+                  </a>
+                </div>
               </div>
             </div>
           </div>

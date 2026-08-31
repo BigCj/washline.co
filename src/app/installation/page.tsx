@@ -2,13 +2,12 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import CartDrawer from '@/components/CartDrawer';
 import InstallationGuide from '@/components/InstallationGuide';
-import ContactSection from '@/components/ContactSection';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Installation Guide & Services | Mr Washline',
+  title: 'Installation Guide & Services | The Washline Co.',
   description:
-    'Step-by-step installation instructions for Mr Washline foldaway clotheslines. Mounting height, clearance rules, spacer blocks, and vibracrete wall mounting guidance.',
+    'Step-by-step installation instructions for The Washline Co. foldaway washing lines. Mounting height, clearance rules, spacer blocks, and vibracrete wall mounting guidance.',
 };
 
 export default function InstallationPage() {
@@ -21,20 +20,19 @@ export default function InstallationPage() {
             <div className="text-xs text-zinc-400 font-mono mb-4">
               <Link href="/" className="hover:text-white">Home</Link>
               <span className="mx-2">/</span>
-              <span className="text-white">Services & Installation</span>
+              <span className="text-white">Installation</span>
             </div>
 
             <h1 className="text-4xl sm:text-6xl font-extrabold text-white tracking-tight">
-              Installation Guide & Services
+              Mounting & Installation Guidelines
             </h1>
             <p className="text-lg text-zinc-300 font-light mt-4 max-w-3xl leading-relaxed">
-              Mounting advice for brick, plastered concrete, block, and vibracrete walls across Cape Town and Johannesburg.
+              Mounting height recommendations, wall space requirements, and bracket installation guidance.
             </p>
           </div>
         </section>
 
         <InstallationGuide />
-        <ContactSection />
       </main>
       <Footer />
       <CartDrawer />

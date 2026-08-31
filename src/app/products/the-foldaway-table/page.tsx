@@ -3,16 +3,16 @@ import Footer from '@/components/Footer';
 import CartDrawer from '@/components/CartDrawer';
 import ContactSection from '@/components/ContactSection';
 import Link from 'next/link';
-import { Sparkles, Check, ArrowRight, MessageSquare } from 'lucide-react';
-import { PRODUCT_DATA } from '@/data/productData';
+import Image from 'next/image';
+import { Maximize2, ShieldCheck, Check, Sparkles } from 'lucide-react';
 
 export const metadata = {
-  title: 'The Foldaway Table | Mr Washline',
+  title: 'The Foldaway Table | The Washline Co.',
   description:
-    'Wall-mounted space-saving fold-down table by Mr Washline. Ideal for balconies, laundries, workshops, and compact dining areas.',
+    'Wall-mounted space-saving fold-down table by The Washline Co. Ideal for balconies, laundries, workshops, and compact dining areas.',
 };
 
-export default function FoldawayTablePage() {
+export default function TheFoldawayTablePage() {
   return (
     <div className="min-h-screen flex flex-col bg-white text-zinc-950">
       <Header />
@@ -27,67 +27,63 @@ export default function FoldawayTablePage() {
               <span className="text-white">The Foldaway Table</span>
             </div>
 
-            <div className="max-w-3xl">
-              <span className="px-3 py-1 rounded-full bg-white/10 text-zinc-300 text-xs font-bold uppercase tracking-wider">
-                Space-Saving Furniture Solutions
-              </span>
-              <h1 className="text-4xl sm:text-6xl font-extrabold text-white mt-4 tracking-tight">
-                The Foldaway Table
-              </h1>
-              <p className="text-lg sm:text-xl text-zinc-300 font-light mt-4 leading-relaxed">
-                A robust, wall-mounted fold-down table surface that folds flat against the wall when not in use. Engineered with the same South African quality principles as our legendary washing lines.
-              </p>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+              <div className="lg:col-span-7">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-bold uppercase tracking-wider text-emerald-400 mb-4 border border-white/10">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Space-Saving Fold-Down Design</span>
+                </div>
 
-              <div className="mt-8 flex flex-wrap gap-4 text-xs font-semibold">
-                <div className="px-4 py-2 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-400" />
-                  <span>Heavy-Duty Wall Mounting</span>
+                <h1 className="text-4xl sm:text-6xl font-extrabold text-white tracking-tight">
+                  The Foldaway Table
+                </h1>
+                <p className="text-lg text-zinc-300 font-light mt-4 leading-relaxed max-w-xl">
+                  A wall-mounted foldaway table designed to provide functional work and dining surfaces without sacrificing floor space.
+                </p>
+
+                <div className="mt-8 flex flex-wrap gap-4 text-xs text-zinc-300">
+                  <div className="p-3 bg-zinc-900 rounded-xl border border-zinc-800 flex items-center gap-2">
+                    <Maximize2 className="w-4 h-4 text-emerald-400" />
+                    <span>Folds flat when not in use</span>
+                  </div>
+                  <div className="p-3 bg-zinc-900 rounded-xl border border-zinc-800 flex items-center gap-2">
+                    <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                    <span>Sturdy wall mounting</span>
+                  </div>
+                  <div className="p-3 bg-zinc-900 rounded-xl border border-zinc-800 flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-400" />
+                    <span>Custom sizes on request</span>
+                  </div>
                 </div>
-                <div className="px-4 py-2 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-400" />
-                  <span>Smooth Locking Stay Brackets</span>
-                </div>
-                <div className="px-4 py-2 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-400" />
-                  <span>Ideal for Balconies & Laundries</span>
+              </div>
+
+              <div className="lg:col-span-5">
+                <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-zinc-800 bg-zinc-900">
+                  <Image
+                    src="/images/products/white-poolside-folded.webp"
+                    alt="The Foldaway Table"
+                    fill
+                    priority
+                    className="object-cover"
+                  />
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Overview & Enquiry */}
-        <section className="py-20 bg-white">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl font-extrabold text-zinc-950">
-              Custom Sizes & Specifications Available
+        <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          <div className="p-8 rounded-3xl bg-zinc-50 border border-zinc-200">
+            <h2 className="text-2xl font-bold text-zinc-950 mb-4">
+              Enquire About The Foldaway Table
             </h2>
-            <p className="mt-4 text-zinc-600 leading-relaxed text-sm sm:text-base">
-              The Foldaway Table is manufactured to order to suit your specific room or balcony dimensions. Contact our Cape Town or Johannesburg teams for custom sizes, finish options, and direct factory pricing.
+            <p className="text-sm text-zinc-600 max-w-2xl leading-relaxed mb-6">
+              Contact The Washline Co. to discuss dimensions, frame colours, and custom requirements for your home or patio.
             </p>
-
-            <div className="mt-8 flex justify-center gap-4">
-              <a
-                href={PRODUCT_DATA.contact.headOffice.whatsappLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold uppercase tracking-wider"
-              >
-                <MessageSquare className="w-4 h-4" />
-                <span>Enquire via WhatsApp</span>
-              </a>
-
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 px-6 py-3.5 bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl text-xs font-bold uppercase tracking-wider"
-              >
-                <span>Request Custom Quote</span>
-              </Link>
-            </div>
           </div>
-        </section>
 
-        <ContactSection />
+          <ContactSection />
+        </section>
       </main>
       <Footer />
       <CartDrawer />

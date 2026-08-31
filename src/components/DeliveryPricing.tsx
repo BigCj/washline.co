@@ -8,6 +8,7 @@ import {
   Check, 
   Clock, 
   Phone,
+  Mail,
   ArrowRight
 } from 'lucide-react';
 import { PRODUCT_DATA } from '@/data/productData';
@@ -16,6 +17,7 @@ export default function DeliveryPricing() {
   const [activeTab, setActiveTab] = useState<'capetown' | 'jhb' | 'nationwide'>('capetown');
   const delivery = PRODUCT_DATA.delivery;
   const sizes = PRODUCT_DATA.sizes;
+  const contact = PRODUCT_DATA.contact;
 
   return (
     <section id="prices" className="py-24 bg-white text-zinc-900 border-b border-zinc-200">
@@ -109,7 +111,7 @@ export default function DeliveryPricing() {
                   : 'text-zinc-600 hover:text-zinc-950'
               }`}
             >
-              Cape Town Delivery Areas
+              Delivery Zones
             </button>
 
             <button
@@ -121,7 +123,7 @@ export default function DeliveryPricing() {
                   : 'text-zinc-600 hover:text-zinc-950'
               }`}
             >
-              Johannesburg Installations
+              Orders & Enquiries
             </button>
 
             <button
@@ -139,10 +141,10 @@ export default function DeliveryPricing() {
 
           {/* Active Tab Content */}
           {activeTab === 'capetown' && (
-            <div id="cape-town" className="p-8 rounded-3xl bg-zinc-50 border border-zinc-200">
+            <div id="delivery-zones" className="p-8 rounded-3xl bg-zinc-50 border border-zinc-200">
               <div className="max-w-3xl mb-6">
                 <h4 className="text-xl font-bold text-zinc-950">
-                  Cape Town City Centre & Surrounding Areas
+                  Regional Delivery Coverage
                 </h4>
                 <p className="text-sm text-zinc-600 mt-2 leading-relaxed">
                   {delivery.capeTownDescription}
@@ -168,36 +170,30 @@ export default function DeliveryPricing() {
           )}
 
           {activeTab === 'jhb' && (
-            <div id="johannesburg" className="p-8 rounded-3xl bg-zinc-50 border border-zinc-200">
+            <div id="orders-enquiries" className="p-8 rounded-3xl bg-zinc-50 border border-zinc-200">
               <div className="max-w-2xl">
                 <h4 className="text-xl font-bold text-zinc-950">
-                  {PRODUCT_DATA.contact.johannesburg.label}
+                  {contact.companyName}
                 </h4>
                 <p className="text-sm text-zinc-600 mt-2 leading-relaxed">
-                  For Johannesburg installation enquiries and supply details, contact our Johannesburg team directly.
+                  For installation enquiries, quotations, or bulk orders, contact our customer service team.
                 </p>
 
                 <div className="mt-6 flex flex-wrap gap-4 text-xs font-semibold">
                   <a
-                    href={`tel:${PRODUCT_DATA.contact.johannesburg.telIntl}`}
+                    href={`tel:${contact.telIntl}`}
                     className="px-4 py-2.5 rounded-xl bg-zinc-900 text-white inline-flex items-center gap-2 hover:bg-zinc-800"
                   >
                     <Phone className="w-3.5 h-3.5" />
-                    <span>Tel: {PRODUCT_DATA.contact.johannesburg.telIntl}</span>
+                    <span>Tel: {contact.tel}</span>
                   </a>
 
                   <a
-                    href={`tel:${PRODUCT_DATA.contact.johannesburg.cellIntl}`}
+                    href={`mailto:${contact.email}`}
                     className="px-4 py-2.5 rounded-xl bg-white border border-zinc-300 text-zinc-900 inline-flex items-center gap-2 hover:bg-zinc-50"
                   >
-                    <span>Cell: {PRODUCT_DATA.contact.johannesburg.cellIntl}</span>
-                  </a>
-
-                  <a
-                    href={`mailto:${PRODUCT_DATA.contact.johannesburg.email}`}
-                    className="px-4 py-2.5 rounded-xl bg-white border border-zinc-300 text-zinc-900 inline-flex items-center gap-2 hover:bg-zinc-50"
-                  >
-                    <span>Email: {PRODUCT_DATA.contact.johannesburg.email}</span>
+                    <Mail className="w-3.5 h-3.5" />
+                    <span>Email: {contact.email}</span>
                   </a>
                 </div>
               </div>

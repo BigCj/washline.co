@@ -34,7 +34,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('mrwashline_cart');
+      const saved = localStorage.getItem('washline_co_cart');
       if (saved) {
         setItems(JSON.parse(saved));
       }
@@ -45,7 +45,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     try {
-      localStorage.setItem('mrwashline_cart', JSON.stringify(items));
+      localStorage.setItem('washline_co_cart', JSON.stringify(items));
     } catch {
       // ignore
     }
@@ -111,9 +111,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     )
     .join('%0A');
 
-  const whatsappMessage = `Hello Mr Washline,%0A%0AI would like to request an order / quotation for the following:%0A${itemsText}%0A%0APlease confirm availability and delivery/installation details.`;
+  const whatsappMessage = `Hello The Washline Co.,%0A%0AI would like to request an order / quotation for the following:%0A${itemsText}%0A%0APlease confirm availability and delivery details.`;
 
-  const quoteWhatsappLink = `https://wa.me/27823782381?text=${whatsappMessage}`;
+  const quoteWhatsappLink = `https://wa.me/27120048109?text=${whatsappMessage}`;
 
   return (
     <CartContext.Provider

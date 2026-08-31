@@ -3,31 +3,31 @@ import './globals.css';
 import { CartProvider } from '@/context/CartContext';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://mrwashline.co.za'),
+  metadataBase: new URL('https://washlinecompany.co.za'),
   title: {
-    default: 'Mr Washline | Foldaway Washing Line Specialists Since 2003',
-    template: '%s | Mr Washline',
+    default: 'The Washline Co. | Quality Foldaway Washing Lines',
+    template: '%s | The Washline Co.',
   },
   description:
-    'Original manufacturers and national suppliers of quality aluminium, epoxy powder-coated wall-mounted foldaway washing lines in South Africa. Rust-resistant and space-saving.',
+    'The Washline Co. supplies quality aluminium, epoxy powder-coated wall-mounted foldaway washing lines in South Africa. Rust-resistant and space-saving.',
   keywords: [
+    'The Washline Co.',
     'Foldaway washing line',
-    'Mr Washline',
     'wall mounted washing line South Africa',
-    'aluminium clothesline Cape Town',
-    'fold down washing line Johannesburg',
-    'rust resistant clothes line',
+    'aluminium washing line',
+    'fold down washing line',
+    'rust resistant washing line',
   ],
-  authors: [{ name: 'Mr Washline' }],
-  creator: 'Mr Washline',
-  publisher: 'Mr Washline',
+  authors: [{ name: 'The Washline Co.' }],
+  creator: 'The Washline Co.',
+  publisher: 'The Washline Co.',
   formatDetection: {
     telephone: true,
     address: true,
     email: true,
   },
   icons: {
-    icon: '/images/logo/mr-washline-logo.png',
+    icon: '/images/logo/the-washline-co-logo.png',
   },
 };
 

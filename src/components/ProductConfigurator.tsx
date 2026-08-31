@@ -135,7 +135,7 @@ export default function ProductConfigurator() {
 
             {/* Sizing Recommendation Note */}
             <div className="p-4 rounded-xl bg-amber-50/70 border border-amber-200 text-xs text-amber-900 leading-relaxed">
-              <strong>Tip on larger spaces:</strong> The longest model manufactured is 2.6 m. Mr Washline recommends using a second or third washing line rather than going larger where additional hanging space is required.
+              <strong>Tip on larger spaces:</strong> The longest model manufactured is 2.6 m. The Washline Co. recommends using a second or third washing line rather than going larger where additional hanging space is required.
             </div>
           </div>
 

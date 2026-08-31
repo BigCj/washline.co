@@ -28,11 +28,10 @@ export interface KitComponent {
 
 export const PRODUCT_DATA = {
   brand: {
-    name: 'Mr Washline',
-    strapline: 'Your foldaway washing line specialists since 2003',
-    foundingYear: 2003,
+    name: 'The Washline Co.',
+    strapline: 'Your foldaway washing line specialists',
     description:
-      'Mr Washline are the original developers/manufacturers and national suppliers of quality aluminium, epoxy powder-coated, wall-mounted foldaway washing lines in South Africa.',
+      'The Washline Co. supplies quality aluminium, epoxy powder-coated, wall-mounted foldaway washing lines in South Africa.',
     heroTitle: 'THE FOLDAWAY',
     heroSubtitle: 'Space when you need it. Gone when you don’t.',
     heroSupporting:
@@ -42,7 +41,7 @@ export const PRODUCT_DATA = {
     rating: {
       score: 'Excellent',
       reviewCount: 46,
-      summary: 'Rated Excellent based on 46 customer reviews.',
+      summary: 'Rated Excellent based on customer reviews.',
     },
   },
 
@@ -126,7 +125,7 @@ export const PRODUCT_DATA = {
   sizeAdvice: {
     title: 'Choosing your size',
     popularNote:
-      'Our most popular Foldaway is the 2.3 m × 80 cm model. The longest model manufactured is 2.6 m. Mr Washline recommends using a second or third washing line rather than going larger where additional hanging space is required.',
+      'Our most popular Foldaway is the 2.3 m × 80 cm model. The longest model manufactured is 2.6 m. The Washline Co. recommends using a second or third washing line rather than going larger where additional hanging space is required.',
     practicalAdvantage:
       'Multiple Foldaways can be positioned strategically to make use of morning and afternoon sun or to place one under cover during rainy periods.',
   },
@@ -258,7 +257,7 @@ export const PRODUCT_DATA = {
     spacerBlockGuidance:
       'Spacer blocks may be needed where obstacles prevent the back bar from sitting correctly. Spacer blocks can also be used when installing onto suitable vibracrete walls where the upright pillars obstruct the back bar. Spacer blocks are supplied on request.',
     mountingHeight:
-      'Mr Washline recommends mounting the washing line at approximately 1.85 metres high.',
+      'The Washline Co. recommends mounting the washing line at approximately 1.85 metres high.',
     fastenersSupplied:
       'For the fully assembled Foldaway model, screws and mounting instructions are supplied.',
     clearanceRule:
@@ -271,15 +270,14 @@ export const PRODUCT_DATA = {
       'Delivery available across South Africa. Delivery charges or free-delivery eligibility are confirmed during checkout or quotation.',
     leadTime: 'Approximately 1–3 working days.',
     capeTownDescription:
-      'Delivery areas include Cape Town City Centre and nearby areas (Atlantic Seaboard from Sea Point to Llandudno, Blouberg and surrounds from Milnerton to Melkbosstrand, City and surrounds, False Bay as far as Simon’s Town, Northern suburbs as far as Brackenfell, Southern Peninsula including Hout Bay, Kommetjie and Noordhoek but not as far as Scarborough, and Southern suburbs). Delivery charges are confirmed during quotation or checkout.',
+      'Delivery available across Cape Town, Gauteng, and nationwide. Delivery charges are confirmed during quotation or checkout.',
     capeTownZones: [
-      'Atlantic Seaboard from Sea Point to Llandudno',
-      'Blouberg and surrounds from Milnerton to Melkbosstrand',
-      'City and surrounds',
-      'False Bay as far as Simon’s Town',
-      'Northern suburbs as far as Brackenfell',
-      'Southern Peninsula including Hout Bay, Kommetjie and Noordhoek (not as far as Scarborough)',
-      'Southern suburbs',
+      'Atlantic Seaboard & Surrounds',
+      'Northern Suburbs',
+      'Southern Suburbs',
+      'Gauteng & Pretoria',
+      'Johannesburg & Surrounds',
+      'Nationwide Courier Delivery',
     ],
   },
 
@@ -292,7 +290,7 @@ export const PRODUCT_DATA = {
     },
     {
       stepNumber: '02',
-      title: 'Place an order online or contact Mr Washline',
+      title: 'Place an order online or contact The Washline Co.',
       description:
         'Select your frame colour (White, Charcoal, or Bronze) and order online or contact us directly.',
     },
@@ -306,36 +304,16 @@ export const PRODUCT_DATA = {
       stepNumber: '04',
       title: 'Order confirmation',
       description:
-        'Mr Washline confirms the order and delivery information. Lead time is approximately 1–3 working days.',
+        'The Washline Co. confirms the order and delivery information. Lead time is approximately 1–3 working days.',
     },
   ],
 
   contact: {
-    headOffice: {
-      label: 'Cape Town (Head Office)',
-      companyName: 'Mr Washline',
-      addressLines: [
-        'Unit D3, Prime Park',
-        'Mocke Road',
-        'Diep River',
-        'South Africa',
-        '7800',
-      ],
-      addressFormatted:
-        'Unit D3, Prime Park, Mocke Road, Diep River, South Africa, 7800',
-      email: 'info@mrwashline.co.za',
-      tel: '021 706 3651',
-      telIntl: '+27 21 706 3651',
-      cellWhatsapp: '082 378 2381',
-      cellWhatsappIntl: '+27 82 378 2381',
-      whatsappLink: 'https://wa.me/27823782381',
-    },
-    johannesburg: {
-      label: 'Johannesburg – Installations',
-      telIntl: '+27 11 486 2824',
-      cellIntl: '+27 74 141 0099',
-      email: 'jhb@mrwashline.co.za',
-    },
+    companyName: 'The Washline Co.',
+    email: 'info@washlinecompany.co.za',
+    tel: '012 004 8109',
+    telIntl: '+27 12 004 8109',
+    whatsappLink: 'https://wa.me/27120048109',
     paymentMethods: ['Mastercard', 'Visa', 'EFT', 'Cash'],
   },
 };

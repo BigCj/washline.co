@@ -5,9 +5,9 @@ import ContactSection from '@/components/ContactSection';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Contact Us | Mr Washline',
+  title: 'Contact Us | The Washline Co.',
   description:
-    'Contact Mr Washline in Cape Town (Diep River) or Johannesburg. Call, WhatsApp, email, or request a fast online quotation.',
+    'Contact The Washline Co. by phone on 012 004 8109 or email info@washlinecompany.co.za for quotes, orders, and delivery advice.',
 };
 
 export default function ContactPage() {
@@ -24,10 +24,10 @@ export default function ContactPage() {
             </div>
 
             <h1 className="text-4xl sm:text-6xl font-extrabold text-white tracking-tight">
-              Contact Mr Washline
+              Contact The Washline Co.
             </h1>
             <p className="text-lg text-zinc-300 font-light mt-4 max-w-3xl leading-relaxed">
-              We are based at Prime Park, Diep River in Cape Town with dedicated regional installation teams in Johannesburg.
+              We are here to assist with sizing advice, custom quotes, stock availability, and nationwide delivery.
             </p>
           </div>
         </section>

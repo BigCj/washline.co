@@ -5,9 +5,9 @@ import DeliveryPricing from '@/components/DeliveryPricing';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Prices & Delivery Rates | Mr Washline',
+  title: 'Prices & Delivery Rates | The Washline Co.',
   description:
-    'Official pricing for Mr Washline foldaway washing lines, DIY assemble kits, and delivery schedules for Cape Town, Johannesburg, and Nationwide South Africa.',
+    'Pricing for The Washline Co. foldaway washing lines, DIY assemble kits, and delivery schedules nationwide across South Africa.',
 };
 
 export default function PricesPage() {
@@ -24,10 +24,10 @@ export default function PricesPage() {
             </div>
 
             <h1 className="text-4xl sm:text-6xl font-extrabold text-white tracking-tight">
-              Prices & Delivery Schedules
+              Prices & Delivery
             </h1>
             <p className="text-lg text-zinc-300 font-light mt-4 max-w-3xl leading-relaxed">
-              Direct factory pricing including 15% VAT for both DIY assemble kits and standard fully assembled foldaway lines.
+              Transparent pricing on our aluminium foldaway washing line models with delivery available across South Africa.
             </p>
           </div>
         </section>

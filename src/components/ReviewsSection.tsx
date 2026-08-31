@@ -62,7 +62,7 @@ export default function ReviewsSection() {
             </h3>
 
             <p className="mt-4 text-sm sm:text-base text-zinc-300 leading-relaxed">
-              Mr Washline offers a 100% satisfaction / money-back guarantee in the event that the customer is not satisfied with the product or service.
+              The Washline Co. offers a 100% satisfaction / money-back guarantee in the event that the customer is not satisfied with the product or service.
             </p>
 
             <div className="mt-6 flex flex-wrap items-center gap-6 text-xs text-zinc-400">

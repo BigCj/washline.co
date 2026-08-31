@@ -2,13 +2,13 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import CartDrawer from '@/components/CartDrawer';
 import Link from 'next/link';
-import { HelpCircle, MessageSquare } from 'lucide-react';
+import { HelpCircle, Phone, Mail } from 'lucide-react';
 import { PRODUCT_DATA } from '@/data/productData';
 
 export const metadata = {
-  title: 'Frequently Asked Questions (FAQs) | Mr Washline',
+  title: 'Frequently Asked Questions (FAQs) | The Washline Co.',
   description:
-    'Factual answers to common questions about Mr Washline foldaway washing lines, sizes, materials, DIY assemble kits, and delivery.',
+    'Factual answers to common questions about The Washline Co. foldaway washing lines, sizes, materials, DIY assemble kits, and delivery.',
 };
 
 export default function FaqsPage() {
@@ -31,7 +31,7 @@ export default function FaqsPage() {
     },
     {
       q: 'What is the recommended mounting height?',
-      a: 'Mr Washline recommends mounting the washing line at approximately 1.85 metres high.',
+      a: 'The Washline Co. recommends mounting the washing line at approximately 1.85 metres high.',
     },
     {
       q: 'Can the Foldaway be mounted onto Vibracrete walls?',
@@ -43,7 +43,7 @@ export default function FaqsPage() {
     },
     {
       q: 'What is your satisfaction guarantee?',
-      a: 'Mr Washline offers a 100% satisfaction / money-back guarantee in the event that the customer is not satisfied with the product or service.',
+      a: 'The Washline Co. offers a 100% satisfaction / money-back guarantee in the event that the customer is not satisfied with the product or service.',
     },
   ];
 
@@ -81,7 +81,7 @@ export default function FaqsPage() {
                 Frequently Asked Questions
               </h1>
               <p className="text-lg text-zinc-300 font-light mt-4 max-w-3xl leading-relaxed">
-                Factual information regarding sizes, installation, materials, and ordering your Mr Washline Foldaway.
+                Factual information regarding sizes, installation, materials, and ordering your The Washline Co. Foldaway.
               </p>
             </div>
           </section>
@@ -107,17 +107,24 @@ export default function FaqsPage() {
             <div className="mt-16 p-8 rounded-3xl bg-zinc-900 text-white text-center space-y-4">
               <h3 className="text-2xl font-bold">Need assistance?</h3>
               <p className="text-zinc-400 text-xs sm:text-sm max-w-md mx-auto">
-                Contact Mr Washline directly for guidance or quotation details.
+                Contact The Washline Co. directly for guidance or quotation details.
               </p>
-              <a
-                href={PRODUCT_DATA.contact.headOffice.whatsappLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold uppercase tracking-wider"
-              >
-                <MessageSquare className="w-4 h-4" />
-                <span>WhatsApp: 082 378 2381</span>
-              </a>
+              <div className="flex flex-wrap justify-center gap-4 pt-2">
+                <a
+                  href={`tel:${PRODUCT_DATA.contact.telIntl}`}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-white text-zinc-950 rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-zinc-100"
+                >
+                  <Phone className="w-4 h-4" />
+                  <span>Call: {PRODUCT_DATA.contact.tel}</span>
+                </a>
+                <a
+                  href={`mailto:${PRODUCT_DATA.contact.email}`}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-zinc-800 text-white rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-zinc-700"
+                >
+                  <Mail className="w-4 h-4" />
+                  <span>Email: {PRODUCT_DATA.contact.email}</span>
+                </a>
+              </div>
             </div>
           </section>
         </main>
