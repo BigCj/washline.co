@@ -39,10 +39,10 @@ export default function KitContentsExploded() {
 
           <div className="mt-6 flex items-baseline gap-4">
             <span className="text-2xl sm:text-3xl font-extrabold text-white">
-              {PRODUCT_DATA.pricing.diyKitRangeDisplay}
+              {PRODUCT_DATA.pricing.rangeDisplay}
             </span>
             <span className="text-xs text-zinc-400">
-              (FROM R{PRODUCT_DATA.pricing.diyKitStartingPrice.toLocaleString()})
+              (FROM R{PRODUCT_DATA.pricing.startingPrice.toLocaleString('en-ZA')})
             </span>
           </div>
 

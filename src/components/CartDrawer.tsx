@@ -23,6 +23,7 @@ export default function CartDrawer() {
     removeItem, 
     updateQuantity, 
     quoteWhatsappLink,
+    totalPrice,
     clearCart
   } = useCart();
 
@@ -99,7 +100,7 @@ export default function CartDrawer() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-2">
                       <h4 className="font-bold text-sm text-zinc-950 truncate">
-                        The Foldaway {item.size.nominalLength}
+                        The Foldaway {item.size.label}
                       </h4>
                       <button
                         type="button"
@@ -112,8 +113,8 @@ export default function CartDrawer() {
                     </div>
 
                     <div className="text-xs text-zinc-500 mt-0.5">
-                      {item.color.name} Frame •{' '}
-                      {item.isDiyKit ? 'DIY Assemble Kit' : 'Standard Assembled'}
+                      {item.color.name} Finish {item.color.additionalCharge ? '(+R240)' : ''} •{' '}
+                      {item.isDiyKit ? 'DIY Kit' : 'Installed Option'}
                     </div>
 
                     <div className="flex items-center justify-between mt-3">
@@ -137,8 +138,8 @@ export default function CartDrawer() {
                         </button>
                       </div>
 
-                      <div className="font-bold text-xs text-zinc-900">
-                        {item.priceDisplay}
+                      <div className="font-bold text-xs text-zinc-900 font-mono">
+                        R{(item.unitPrice * item.quantity).toLocaleString('en-ZA')} incl. VAT
                       </div>
                     </div>
                   </div>
@@ -150,8 +151,17 @@ export default function CartDrawer() {
           {/* Footer & Checkout CTAs */}
           {items.length > 0 && (
             <div className="p-6 bg-zinc-50 border-t border-zinc-200 space-y-4">
+              <div className="flex items-baseline justify-between pb-2 border-b border-zinc-200">
+                <span className="text-xs font-bold uppercase tracking-wider text-zinc-600">
+                  Estimated Total (incl. VAT)
+                </span>
+                <span className="text-xl font-extrabold text-zinc-950 font-mono">
+                  R{totalPrice.toLocaleString('en-ZA')}
+                </span>
+              </div>
+
               <div className="p-3 rounded-xl bg-white border border-zinc-200 text-xs text-zinc-600">
-                <span>Delivery charges or free-delivery eligibility are confirmed during checkout or quotation.</span>
+                <span>Supply and standard installation included (VAT included).</span>
               </div>
 
               {/* Direct WhatsApp Order Link */}
@@ -162,7 +172,7 @@ export default function CartDrawer() {
                 className="w-full py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-sm flex items-center justify-center gap-2"
               >
                 <MessageSquare className="w-4 h-4" />
-                <span>Enquire / Order via WhatsApp</span>
+                <span>Order / Quote via WhatsApp</span>
               </a>
 
               {/* Or standard inquiry checkout */}
@@ -171,7 +181,7 @@ export default function CartDrawer() {
                 onClick={closeCart}
                 className="w-full py-3 px-4 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2"
               >
-                <span>Request Quotation</span>
+                <span>Request Formal Quotation</span>
               </Link>
 
               <div className="flex items-center justify-center gap-2 text-[11px] text-zinc-500 pt-1">

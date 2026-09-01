@@ -41,8 +41,8 @@ export default function HomePage() {
     offers: {
       '@type': 'AggregateOffer',
       priceCurrency: 'ZAR',
-      lowPrice: '1760',
-      highPrice: '1960',
+      lowPrice: '2550',
+      highPrice: '2990',
       offerCount: '5',
       availability: 'https://schema.org/InStock',
     },

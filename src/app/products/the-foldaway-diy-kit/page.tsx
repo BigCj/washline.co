@@ -11,7 +11,7 @@ import { PRODUCT_DATA } from '@/data/productData';
 export const metadata = {
   title: 'The Foldaway DIY Assemble Kit | The Washline Co.',
   description:
-    'The Foldaway DIY Assemble Kit shipped in a strong cardboard tube (approx. 10 cm in diameter) for easy transport across South Africa. Starting from R1,760 incl. VAT.',
+    'The Foldaway DIY Assemble Kit shipped in a strong cardboard tube (approx. 10 cm in diameter) for easy transport across South Africa. Starting from R2,550 incl. VAT.',
 };
 
 export default function TheFoldawayDiyKitPage() {
@@ -51,10 +51,10 @@ export default function TheFoldawayDiyKitPage() {
 
                 <div className="mt-8 flex items-baseline gap-4">
                   <span className="text-3xl font-extrabold text-white">
-                    {PRODUCT_DATA.pricing.diyKitRangeDisplay}
+                    {PRODUCT_DATA.pricing.rangeDisplay}
                   </span>
                   <span className="text-xs text-zinc-400">
-                    (FROM R{PRODUCT_DATA.pricing.diyKitStartingPrice.toLocaleString()})
+                    (FROM R{PRODUCT_DATA.pricing.startingPrice.toLocaleString('en-ZA')})
                   </span>
                 </div>
 

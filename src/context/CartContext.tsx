@@ -9,6 +9,7 @@ export interface CartItem {
   color: FrameColor;
   isDiyKit: boolean;
   quantity: number;
+  unitPrice: number;
   priceDisplay: string;
 }
 
@@ -23,6 +24,7 @@ interface CartContextType {
   updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
   totalItemsCount: number;
+  totalPrice: number;
   quoteWhatsappLink: string;
 }
 
@@ -57,7 +59,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const addItem = (size: ProductSize, color: FrameColor, isDiyKit: boolean, quantity = 1) => {
     const itemId = `${size.id}-${color.id}-${isDiyKit ? 'diy' : 'standard'}`;
-    const priceDisplay = isDiyKit ? 'From R1,760 incl. VAT' : 'Quotation on request';
+    const unitPrice = size.price + (color.additionalCharge || 0);
+    const priceDisplay = `R${unitPrice.toLocaleString('en-ZA')} incl. VAT`;
 
     setItems((prev) => {
       const existing = prev.find((item) => item.id === itemId);
@@ -76,6 +79,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           color,
           isDiyKit,
           quantity,
+          unitPrice,
           priceDisplay,
         },
       ];
@@ -101,17 +105,20 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const clearCart = () => setItems([]);
 
   const totalItemsCount = items.reduce((acc, item) => acc + item.quantity, 0);
+  const totalPrice = items.reduce((acc, item) => acc + item.unitPrice * item.quantity, 0);
 
   const itemsText = items
     .map(
       (it) =>
-        `• ${it.quantity}x The Foldaway ${it.size.nominalLength} (${it.color.name} - ${
+        `• ${it.quantity}x The Foldaway ${it.size.label} (${it.color.name}${it.color.additionalCharge ? ' +R240' : ''} - ${
           it.isDiyKit ? 'DIY Assemble Kit' : 'Standard Assembled'
-        })`
+        }) @ R${(it.unitPrice * it.quantity).toLocaleString('en-ZA')} incl. VAT`
     )
     .join('%0A');
 
-  const whatsappMessage = `Hello The Washline Co.,%0A%0AI would like to request an order / quotation for the following:%0A${itemsText}%0A%0APlease confirm availability and delivery details.`;
+  const totalText = `%0A%0A*Estimated Total: R${totalPrice.toLocaleString('en-ZA')} incl. VAT*`;
+
+  const whatsappMessage = `Hello The Washline Co.,%0A%0AI would like to place an order / request a formal quotation for the following:%0A${itemsText}${totalText}%0A%0APlease confirm availability and installation / delivery arrangements.`;
 
   const quoteWhatsappLink = `https://wa.me/27120048109?text=${whatsappMessage}`;
 
@@ -128,6 +135,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         updateQuantity,
         clearCart,
         totalItemsCount,
+        totalPrice,
         quoteWhatsappLink,
       }}
     >

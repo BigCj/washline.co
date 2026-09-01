@@ -3,6 +3,8 @@ export interface ProductSize {
   nominalLength: string;
   width: string;
   label: string;
+  lineSpace: string;
+  price: number;
   linesCount?: number;
   lineSpacing?: string;
   totalHangingSpace?: string;
@@ -12,17 +14,27 @@ export interface ProductSize {
 }
 
 export interface FrameColor {
-  id: 'charcoal' | 'white' | 'bronze';
+  id: 'white' | 'charcoal' | 'bronze';
   name: string;
   hex: string;
   description: string;
   image: string;
+  additionalCharge: number;
+  isIncluded?: boolean;
 }
 
 export interface KitComponent {
   number: number;
   name: string;
   quantity: string;
+  description: string;
+}
+
+export interface OnSiteService {
+  id: string;
+  name: string;
+  price: number;
+  priceDisplay: string;
   description: string;
 }
 
@@ -46,34 +58,40 @@ export const PRODUCT_DATA = {
   },
 
   pricing: {
-    diyKitStartingPrice: 1760,
-    diyKitPriceDisplay: 'From R1,760 incl. VAT',
-    diyKitRangeDisplay: 'R1,760 – R1,960 incl. VAT',
+    startingPrice: 2550,
+    priceDisplay: 'From R2,550 incl. VAT',
+    rangeDisplay: 'R2,550 – R2,990 incl. VAT',
+    colorSurcharge: 240,
     currency: 'ZAR',
     currencySymbol: 'R',
+    note: 'All rates are in South African Rand and include VAT. Installed unit prices cover supply and standard installation; site-specific requirements outside the standard scope will be quoted separately.',
   },
 
   colors: [
     {
-      id: 'charcoal',
-      name: 'Charcoal',
-      hex: '#27272A',
-      description: 'Charcoal epoxy powder-coated finish.',
-      image: '/images/products/01-open-charcoal.webp',
-    },
-    {
       id: 'white',
       name: 'White',
       hex: '#F4F4F5',
-      description: 'White epoxy powder-coated finish.',
+      description: 'Standard epoxy-coated white finish.',
       image: '/images/products/09-white-frame.webp',
+      additionalCharge: 0,
+      isIncluded: true,
+    },
+    {
+      id: 'charcoal',
+      name: 'Charcoal',
+      hex: '#27272A',
+      description: 'Charcoal finish (+R240 per unit).',
+      image: '/images/products/01-open-charcoal.webp',
+      additionalCharge: 240,
     },
     {
       id: 'bronze',
       name: 'Bronze',
       hex: '#524036',
-      description: 'Bronze epoxy powder-coated finish.',
+      description: 'Bronze finish (+R240 per unit).',
       image: '/images/products/01-open-charcoal.webp',
+      additionalCharge: 240,
     },
   ] as FrameColor[],
 
@@ -82,28 +100,36 @@ export const PRODUCT_DATA = {
       id: '1.0m',
       nominalLength: '1.0 m',
       width: '80 cm',
-      label: '1.0 metres × 80 cm',
+      label: '1.0 m × 80 cm',
+      lineSpace: '6 m',
+      price: 2550,
       minWallSpaceRequired: '1.1 metres (nominal size + approx. 10 cm clearance)',
     },
     {
       id: '1.5m',
       nominalLength: '1.5 m',
       width: '80 cm',
-      label: '1.5 metres × 80 cm',
+      label: '1.5 m × 80 cm',
+      lineSpace: '9 m',
+      price: 2600,
       minWallSpaceRequired: '1.6 metres (nominal size + approx. 10 cm clearance)',
     },
     {
       id: '2.0m',
       nominalLength: '2.0 m',
       width: '80 cm',
-      label: '2.0 metres × 80 cm',
+      label: '2.0 m × 80 cm',
+      lineSpace: '12 m',
+      price: 2650,
       minWallSpaceRequired: '2.1 metres (nominal size + approx. 10 cm clearance)',
     },
     {
       id: '2.3m',
       nominalLength: '2.3 m',
       width: '80 cm',
-      label: '2.3 metres × 80 cm',
+      label: '2.3 m × 80 cm',
+      lineSpace: '13.5 m',
+      price: 2680,
       linesCount: 6,
       lineSpacing: 'approx. 10 cm',
       totalHangingSpace: 'approx. 13.5 metres',
@@ -116,11 +142,37 @@ export const PRODUCT_DATA = {
       id: '2.6m',
       nominalLength: '2.6 m',
       width: '80 cm',
-      label: '2.6 metres × 80 cm',
+      label: '2.6 m × 80 cm',
+      lineSpace: '15.5 m',
+      price: 2750,
       sheetCompatibility: 'Caters for king-size sheets.',
       minWallSpaceRequired: '2.7 metres (nominal size + approx. 10 cm clearance)',
     },
   ] as ProductSize[],
+
+  services: [
+    {
+      id: 'reline-first',
+      name: 'Reline service - first compatible unit',
+      price: 885,
+      priceDisplay: 'R885',
+      description: 'On-site reline service for first unit.',
+    },
+    {
+      id: 'reline-additional',
+      name: 'Reline service - each additional unit while on site',
+      price: 585,
+      priceDisplay: 'R585',
+      description: 'On-site reline service for subsequent units during same visit.',
+    },
+    {
+      id: 'removal-existing',
+      name: 'Removal of existing washing line while on site',
+      price: 280,
+      priceDisplay: 'R280',
+      description: 'Removal and disposal assistance of existing old washing line.',
+    },
+  ] as OnSiteService[],
 
   sizeAdvice: {
     title: 'Choosing your size',

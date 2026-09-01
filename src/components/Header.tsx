@@ -368,7 +368,7 @@ export default function Header() {
                 className="w-full inline-flex items-center justify-center py-3 px-4 bg-zinc-900 text-white font-bold text-sm uppercase tracking-wider rounded-xl shadow-sm"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                BUY NOW — FROM R1,760
+                BUY NOW — FROM R2,550
               </Link>
               <div className="mt-4 text-center text-xs text-zinc-500 space-y-1">
                 <div>
